@@ -59,12 +59,12 @@ export default function ComoVotarPage() {
               question="¿Cuáles son los pasos para votar una vez que recibo la documentación?"
               answer={
                 <ol className="list-decimal list-inside space-y-2">
-                 <li>Marcá en la Boleta Única de Papel (BUP) la opción de tu preferencia.</li>
-                 <li>Introducí la boleta en el &apos;sobre de resguardo&apos; y cerralo bien.</li>
-                 <li>Completá y firmá el formulario de declaración jurada de identidad.</li>
-                <li>Colocá el &apos;sobre de resguardo&apos; y la declaración jurada dentro del &apos;sobre de envío&apos; y cerralo.</li>
-               <li>Envialo por correo (es gratis) o depositalo en los buzones de tu consulado.</li>
-            </ol>
+                  <li>Marcá en la Boleta Única de Papel (BUP) la opción de tu preferencia.</li>
+                  <li>Introducí la boleta en el &apos;sobre de resguardo&apos; y cerralo bien.</li>
+                  <li>Completá y firmá el formulario de declaración jurada de identidad.</li>
+                  <li>Colocá el &apos;sobre de resguardo&apos; y la declaración jurada dentro del &apos;sobre de envío&apos; y cerralo.</li>
+                  <li>Envialo por correo (es gratis) o depositalo en los buzones de tu consulado.</li>
+                </ol>
               }
             />
             <QuestionAnswer
