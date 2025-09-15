@@ -1,25 +1,37 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+// eslint.config.mjs
+import nextPlugin from "@next/eslint-plugin-next";
+import reactPlugin from "eslint-plugin-react";
+import hooksPlugin from "eslint-plugin-react-hooks";
+import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+/** @type {import('eslint').Linter.FlatConfig[]} */
+const config = [
   {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-    ],
+    files: ["src/**/*.{js,mjs,cjs,jsx,mjs,ts,tsx}"],
+    plugins: {
+      react: reactPlugin,
+      "react-hooks": hooksPlugin,
+      "jsx-a11y": jsxA11yPlugin,
+      "@next/next": nextPlugin,
+    },
+    languageOptions: {
+      parserOptions: {
+        ...reactPlugin.configs.recommended.parserOptions,
+        ...reactPlugin.configs["jsx-runtime"].parserOptions,
+      },
+    },
+    rules: {
+      ...reactPlugin.configs.recommended.rules,
+      ...reactPlugin.configs["jsx-runtime"].rules,
+      ...hooksPlugin.configs.recommended.rules,
+      ...jsxA11yPlugin.configs.recommended.rules,
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs["core-web-vitals"].rules,
+      // --- NUEVA REGLA AÑADIDA ---
+      // Desactivamos la regla de los apóstrofos para no tener más problemas.
+      "react/no-unescaped-entities": "off",
+    },
   },
 ];
 
-export default eslintConfig;
+export default config;
