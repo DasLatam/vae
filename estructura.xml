@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <file>eslint.config.mjs</file>
+  <file>next-env.d.ts</file>
+  <file>next.config.ts</file>
+  <file>package.json</file>
+  <file>postcss.config.mjs</file>
+  <file>README.md</file>
+  <file>tsconfig.json</file>
+  <directory name="public">
+    <file>file.svg</file>
+    <file>globe.svg</file>
+    <file>next.svg</file>
+    <file>vercel.svg</file>
+    <file>window.svg</file>
+    <directory name="images" />
+  </directory>
+  <directory name="src">
+    <directory name="app">
+      <file>favicon.ico</file>
+      <file>globals.css</file>
+      <file>layout.tsx</file>
+      <file>page.tsx</file>
+      <directory name="components">
+        <file>Footer.tsx</file>
+        <file>Header.tsx</file>
+      </directory>
+    </directory>
+  </directory>
+</project>
