@@ -27,9 +27,6 @@ const config = [
       ...jsxA11yPlugin.configs.recommended.rules,
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs["core-web-vitals"].rules,
-      // --- NUEVA REGLA AÑADIDA ---
-      // Desactivamos la regla de los apóstrofos para no tener más problemas.
-      "react/no-unescaped-entities": "off",
     },
   },
 ];
