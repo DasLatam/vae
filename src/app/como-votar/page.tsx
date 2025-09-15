@@ -1,6 +1,21 @@
 // src/app/como-votar/page.tsx
 import { HelpCircle } from "lucide-react";
 
+// Moviendo el componente auxiliar fuera para una mejor estructura
+function QuestionAnswer({ question, answer }: { question: string, answer: React.ReactNode }) {
+  return (
+    <div className="bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
+      <div className="flex items-start">
+        <HelpCircle className="w-8 h-8 text-blue-500 mr-4 flex-shrink-0 mt-1" />
+        <div>
+          <h3 className="text-xl font-semibold text-gray-800 mb-2">{question}</h3>
+          <div className="text-gray-700 leading-relaxed">{answer}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ComoVotarPage() {
   return (
     <div className="bg-white py-12">
@@ -26,53 +41,38 @@ export default function ComoVotarPage() {
               question="¿Qué requisitos debo cumplir para votar por correo postal?"
               answer={
                 <ul className="list-disc list-inside space-y-2">
-                  [cite_start]<li>Tener 16 años o más[cite: 327].</li>
-                  [cite_start]<li>Tener el domicilio en el exterior asentado en tu DNI (con una antigüedad de al menos 180 días antes de la elección)[cite: 328].</li>
-                  [cite_start]<li>Estar incluido en el padrón electoral de residentes en el exterior[cite: 329].</li>
-                  [cite_start]<li>Inscribirte en el registro para votar por correo postal en las fechas habilitadas[cite: 330].</li>
+                  <li>Tener 16 años o más.</li>
+                  <li>Tener el domicilio en el exterior asentado en tu DNI (con una antigüedad de al menos 180 días antes de la elección).</li>
+                  <li>Estar incluido en el padrón electoral de residentes en el exterior.</li>
+                  <li>Inscribirte en el registro para votar por correo postal en las fechas habilitadas.</li>
                 </ul>
               }
             />
             <QuestionAnswer
               question="¿Cuándo y cómo me inscribo para votar por correo?"
-              [cite_start]answer="La inscripción se realiza en un formulario online en la web de la Cámara Nacional Electoral. Para las elecciones de 2025, el período de inscripción fue del 29 de mayo al 28 de junio[cite: 325, 333]. Es crucial estar atento a estas fechas para futuras elecciones."
+              answer="La inscripción se realiza en un formulario online en la web de la Cámara Nacional Electoral. Para las elecciones de 2025, el período de inscripción fue del 29 de mayo al 28 de junio. Es crucial estar atento a estas fechas para futuras elecciones."
             />
             <QuestionAnswer
               question="Si me inscribí para voto postal, ¿puedo votar en el consulado?"
-              answer="No. [cite_start]La inscripción para el voto postal te excluye del padrón presencial en la sede diplomática[cite: 335]."
+              answer="No. La inscripción para el voto postal te excluye del padrón presencial en la sede diplomática."
             />
              <QuestionAnswer
               question="¿Cuáles son los pasos para votar una vez que recibo la documentación?"
               answer={
                 <ol className="list-decimal list-inside space-y-2">
-                  [cite_start]<li>Marcá en la Boleta Única de Papel (BUP) la opción de tu preferencia[cite: 345].</li>
-                  [cite_start]<li>Introducí la boleta en el 'sobre de resguardo' y cerralo bien[cite: 346].</li>
-                  [cite_start]<li>Completá y firmá el formulario de declaración jurada de identidad[cite: 347].</li>
-                  [cite_start]<li>Colocá el 'sobre de resguardo' y la declaración jurada dentro del 'sobre de envío' y cerralo[cite: 348].</li>
-                  [cite_start]<li>Envialo por correo (es gratis) o depositalo en los buzones de tu consulado[cite: 349].</li>
+                  <li>Marcá en la Boleta Única de Papel (BUP) la opción de tu preferencia.</li>
+                  <li>Introducí la boleta en el 'sobre de resguardo' y cerralo bien.</li>
+                  <li>Completá y firmá el formulario de declaración jurada de identidad.</li>
+                  <li>Colocá el 'sobre de resguardo' y la declaración jurada dentro del 'sobre de envío' y cerralo.</li>
+                  <li>Envialo por correo (es gratis) o depositalo en los buzones de tu consulado.</li>
                 </ol>
               }
             />
             <QuestionAnswer
               question="¿Hasta cuándo tengo tiempo de enviar mi voto?"
-              [cite_start]answer="Tu voto debe ser recibido en la representación diplomática o consular, a más tardar, el último día hábil anterior a la fecha de la elección en Argentina. ¡Asegúrate de enviarlo con suficiente anticipación! [cite: 351]"
+              answer="Tu voto debe ser recibido en la representación diplomática o consular, a más tardar, el último día hábil anterior a la fecha de la elección en Argentina. ¡Asegúrate de enviarlo con suficiente anticipación!"
             />
           </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Componente auxiliar para mostrar las preguntas y respuestas
-function QuestionAnswer({ question, answer }: { question: string, answer: string | React.ReactNode }) {
-  return (
-    <div className="bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
-      <div className="flex items-start">
-        <HelpCircle className="w-8 h-8 text-blue-500 mr-4 flex-shrink-0 mt-1" />
-        <div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">{question}</h3>
-          <div className="text-gray-700 leading-relaxed">{answer}</div>
         </div>
       </div>
     </div>
