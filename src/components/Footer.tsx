@@ -43,7 +43,8 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-10 border-t border-slate-200 pt-6 text-center text-slate-500">
-          <p>&copy; {new Date().getFullYear()} VAE. Un proyecto cívico independiente.</p>
+          {/* Texto del copyright actualizado */}
+          <p>© {new Date().getFullYear()} VAE - Voto Argentino en el Exterior - Un proyecto cívico independiente - Power By Asado Patrio 🇦🇷</p>
         </div>
       </div>
     </footer>

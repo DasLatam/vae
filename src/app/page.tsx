@@ -21,18 +21,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Sección CTA 2027 */}
+      {/* Sección CTA 2027 con enlace al formulario */}
       <section className="bg-amber-400 text-slate-900 text-center py-12">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold">¿NO PODÉS VOTAR EN 2025?</h2>
           <p className="text-xl mt-2 mb-4 font-semibold">¡ASEGURÁ TU VOTO PARA 2027!</p>
           <p className="max-w-2xl mx-auto">
-            El padrón para las elecciones de medio término ya está cerrado. El paso más importante que podés dar ahora es actualizar tu domicilio en el DNI. ¡Hacelo y preparate para las próximas elecciones presidenciales!
+            El padrón para las elecciones de medio término ya está cerrado. El paso más importante que podés dar ahora es actualizar tu domicilio en el DNI.{' '}
+            <Link href="/#formulario-suscripcion" className="font-bold underline hover:text-blue-800">
+              ¡Hacelo y preparate para las próximas elecciones presidenciales!
+            </Link>
           </p>
         </div>
       </section>
       
-      {/* Sección de Información Clave */}
+      {/* El resto de la página no necesita cambios... */}
       <section className="py-20 sm:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -59,7 +62,6 @@ export default function HomePage() {
         </div>
       </section>
       
-      {/* Sección de Resultados */}
       <section className="bg-slate-100 py-16">
         <div className="container mx-auto px-4 text-center">
           <Archive className="w-12 h-12 text-blue-800 mx-auto mb-4" />
@@ -73,7 +75,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- SECCIÓN DE SUSCRIPCIÓN CON ID --- */}
       <section id="formulario-suscripcion" className="bg-white py-20 sm:py-24 border-t border-slate-200">
         <div className="container mx-auto px-4 flex flex-col items-center text-center">
           <Mail className="w-12 h-12 text-blue-600 mx-auto mb-4" />
