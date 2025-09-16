@@ -1,30 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
+  <file>.env.local</file>
+  <directory name=".git" />
+  <file>.gitignore</file>
+  <directory name=".next" />
+  <file>README.md</file>
   <file>eslint.config.mjs</file>
+  <file>estructura.xml</file>
   <file>next-env.d.ts</file>
+  <file>next.config.mjs</file>
   <file>next.config.ts</file>
+  <directory name="node_modules" />
+  <file>package-lock.json</file>
   <file>package.json</file>
   <file>postcss.config.mjs</file>
-  <file>README.md</file>
-  <file>tsconfig.json</file>
   <directory name="public">
     <file>file.svg</file>
     <file>globe.svg</file>
+    <directory name="images" />
     <file>next.svg</file>
     <file>vercel.svg</file>
     <file>window.svg</file>
-    <directory name="images" />
   </directory>
   <directory name="src">
     <directory name="app">
-      <file>favicon.ico</file>
+      <file>actions.ts</file>
+      <directory name="como-votar">
+        <file>page.tsx</file>
+      </directory>
       <file>globals.css</file>
+      <file>icon.tsx</file>
       <file>layout.tsx</file>
+      <directory name="normativa">
+        <file>page.tsx</file>
+      </directory>
+      <directory name="novedades">
+        <file>page.tsx</file>
+      </directory>
       <file>page.tsx</file>
-      <directory name="components">
-        <file>Footer.tsx</file>
-        <file>Header.tsx</file>
+      <directory name="resultados">
+        <file>page.tsx</file>
       </directory>
     </directory>
+    <directory name="components">
+      <file>Footer.tsx</file>
+      <file>Header.tsx</file>
+      <file>Logo.tsx</file>
+      <file>NewsletterForm.tsx</file>
+    </directory>
+    <directory name="lib">
+      <file>supabaseClient.ts</file>
+    </directory>
   </directory>
+  <file>tailwind.config.ts</file>
+  <directory name="temp-project">
+    <file>.gitignore</file>
+    <file>README.md</file>
+    <file>eslint.config.mjs</file>
+    <file>next-env.d.ts</file>
+    <file>next.config.ts</file>
+    <directory name="node_modules" />
+    <file>package-lock.json</file>
+    <file>package.json</file>
+    <file>postcss.config.mjs</file>
+    <directory name="public" />
+    <directory name="src" />
+    <file>tsconfig.json</file>
+  </directory>
+  <file>tsconfig.json</file>
 </project>
