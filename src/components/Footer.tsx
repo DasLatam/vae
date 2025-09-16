@@ -1,7 +1,7 @@
 // src/components/Footer.tsx
 import Link from 'next/link';
 import Image from 'next/image';
-import { Info, Twitter, Youtube, Facebook, Mail } from 'lucide-react'; // Añadimos Mail
+import { Info, Twitter, Youtube, Facebook, Mail } from 'lucide-react';
 import { Logo } from './Logo';
 
 export function Footer() {
@@ -13,7 +13,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
               <Logo />
-              <span className="text-xl font-bold text-slate-800">VAE - Voto Argentino en el Exterior</span>
+              <span className="text-xl font-bold text-slate-800">VAE</span>
             </div>
             <p className="text-slate-600 max-w-md text-sm">
               Plataforma de asesoramiento para facilitar el ejercicio del derecho al voto de los ciudadanos argentinos residentes en el extranjero.
@@ -48,7 +48,6 @@ export function Footer() {
                   <Info size={16} className="mr-2" /> Transparencia
                 </Link>
               </li>
-              {/* --- NUEVO ENLACE DE CORREO --- */}
               <li>
                 <a href="mailto:republiaami@gmail.com" className="hover:text-blue-600 flex items-center">
                   <Mail size={16} className="mr-2" /> Contacto
@@ -84,6 +83,11 @@ export function Footer() {
           
         </div>
         <div className="mt-12 border-t border-slate-200 pt-6 text-center text-slate-500 text-sm">
+          <div className="flex justify-center items-center gap-4 mb-2">
+            <Link href="/privacidad" className="hover:underline">Política de Privacidad</Link>
+            <span>•</span>
+            <Link href="/condiciones" className="hover:underline">Términos y Condiciones</Link>
+          </div>
           <p>© {new Date().getFullYear()} VAE - Voto Argentino en el Exterior - Un proyecto cívico independiente - Power By Asado Patrio 🇦🇷</p>
         </div>
       </div>
