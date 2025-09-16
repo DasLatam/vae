@@ -1,7 +1,7 @@
 // src/components/Footer.tsx
 import Link from 'next/link';
 import Image from 'next/image';
-import { Info, Twitter, Youtube, Facebook } from 'lucide-react';
+import { Info, Twitter, Youtube, Facebook, Mail } from 'lucide-react'; // Añadimos Mail
 import { Logo } from './Logo';
 
 export function Footer() {
@@ -13,7 +13,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
               <Logo />
-              <span className="text-xl font-bold text-slate-800">VAE</span>
+              <span className="text-xl font-bold text-slate-800">VAE - Voto Argentino en el Exterior</span>
             </div>
             <p className="text-slate-600 max-w-md text-sm">
               Plataforma de asesoramiento para facilitar el ejercicio del derecho al voto de los ciudadanos argentinos residentes en el extranjero.
@@ -31,7 +31,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-slate-900 mb-3">Recursos</h3>
+            <h3 className="font-semibold text-slate-900 mb-3">Información y Contacto</h3>
             <ul className="space-y-2 text-slate-600">
               <li>
                 <a href="https://www.electoral.gob.ar/votoexterior/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 flex items-center">
@@ -43,11 +43,16 @@ export function Footer() {
                   <Info size={16} className="mr-2" /> Consultar Padrón
                 </a>
               </li>
-              {/* --- NUEVO ENLACE DE TRANSPARENCIA --- */}
               <li>
                 <Link href="/transparencia" className="hover:text-blue-600 flex items-center">
                   <Info size={16} className="mr-2" /> Transparencia
                 </Link>
+              </li>
+              {/* --- NUEVO ENLACE DE CORREO --- */}
+              <li>
+                <a href="mailto:republiaami@gmail.com" className="hover:text-blue-600 flex items-center">
+                  <Mail size={16} className="mr-2" /> Contacto
+                </a>
               </li>
             </ul>
           </div>
