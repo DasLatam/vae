@@ -43,3 +43,35 @@ export async function suscribirNovedades(formData: FormData) {
 
   return { success: true, message: '¡Gracias por registrarte! Tus datos han sido guardados.' };
 }
+
+// src/app/actions.ts
+
+// ... (la función suscribirNovedades que ya existe)
+
+export async function enviarRespuestaEncuesta(formData: FormData) {
+  const encuestaId = formData.get('encuesta_id') as string;
+  const rawData = {
+    partido_politico: formData.get('partido_politico') as string,
+    pais_residencia: formData.get('pais_residencia') as string,
+    ultima_provincia: formData.get('ultima_provincia') as string,
+    rango_edad: formData.get('rango_edad') as string,
+  };
+
+  if (!rawData.partido_politico || !rawData.ultima_provincia || !rawData.rango_edad) {
+    return { success: false, message: 'Por favor, completa todos los campos requeridos.' };
+  }
+
+  const { error } = await supabase
+    .from('respuestas_encuesta')
+    .insert({
+      encuesta_id: parseInt(encuestaId),
+      ...rawData
+    });
+
+  if (error) {
+    console.error('Error de Supabase:', error);
+    return { success: false, message: 'Hubo un error al enviar tu respuesta.' };
+  }
+
+  return { success: true, message: '¡Gracias por participar!' };
+}
