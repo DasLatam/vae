@@ -1,79 +1,80 @@
-// src/app/como-votar/page.tsx
-import { HelpCircle } from "lucide-react";
+// src/app/page.tsx
+import Link from 'next/link';
+import { CheckCircle, ExternalLink, Archive } from 'lucide-react';
 
-function QuestionAnswer({ question, answer }: { question: string, answer: React.ReactNode }) {
+export default function HomePage() {
   return (
-    <div className="bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
-      <div className="flex items-start">
-        <HelpCircle className="w-8 h-8 text-blue-500 mr-4 flex-shrink-0 mt-1" />
-        <div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">{question}</h3>
-          <div className="text-gray-700 leading-relaxed">{answer}</div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function ComoVotarPage() {
-  return (
-    <div className="bg-white py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-blue-900 mb-4 text-center">
-            Cómo Votar desde el Exterior
-          </h1>
-          <p className="text-lg text-gray-600 mb-10 text-center">
-            Aquí encontrarás las respuestas a las preguntas más frecuentes sobre el voto por correo postal, basado en la información oficial.
+    <>
+      {/* Sección Hero */}
+      <section className="bg-blue-600 text-white text-center py-20">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Tu Voto, Tu Voz, Donde Estés</h1>
+          <p className="text-lg md:text-xl max-w-3xl mx-auto mb-8">
+            Te guiamos paso a paso para que puedas votar desde cualquier parte del mundo en las elecciones argentinas.
           </p>
+          <Link href="/como-votar" className="bg-white text-blue-600 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-200 transition-transform transform hover:scale-105">
+            Empezá ahora
+          </Link>
+        </div>
+      </section>
 
-          <div className="space-y-8">
-            <QuestionAnswer
-              question="¿Qué se vota en las elecciones de 2025?"
-              answer="Los argentinos residentes en el exterior votan para elegir Diputados Nacionales de todo el país y Senadores Nacionales de las provincias que renuevan sus bancas (Chaco, Entre Ríos, Neuquén, Río Negro, Salta, Santiago del Estero, Tierra del Fuego) y de Capital Federal."
-            />
-            <QuestionAnswer
-              question="¿Es obligatorio votar si vivo en el exterior?"
-              answer="No, el voto para los electores residentes en el exterior es de carácter optativo."
-            />
-            <QuestionAnswer
-              question="¿Qué requisitos debo cumplir para votar por correo postal?"
-              answer={
-                <ul className="list-disc list-inside space-y-2">
-                  <li>Tener 16 años o más.</li>
-                  <li>Tener el domicilio en el exterior asentado en tu DNI (con una antigüedad de al menos 180 días antes de la elección).</li>
-                  <li>Estar incluido en el padrón electoral de residentes en el exterior.</li>
-                  <li>Inscribirte en el registro para votar por correo postal en las fechas habilitadas.</li>
-                </ul>
-              }
-            />
-            <QuestionAnswer
-              question="¿Cuándo y cómo me inscribo para votar por correo?"
-              answer="La inscripción se realiza en un formulario online en la web de la Cámara Nacional Electoral. Para las elecciones de 2025, el período de inscripción fue del 29 de mayo al 28 de junio. Es crucial estar atento a estas fechas para futuras elecciones."
-            />
-            <QuestionAnswer
-              question="Si me inscribí para voto postal, ¿puedo votar en el consulado?"
-              answer="No. La inscripción para el voto postal te excluye del padrón presencial en la sede diplomática."
-            />
-             <QuestionAnswer
-              question="¿Cuáles son los pasos para votar una vez que recibo la documentación?"
-              answer={
-                <ol className="list-decimal list-inside space-y-2">
-                  <li>Marcá en la Boleta Única de Papel (BUP) la opción de tu preferencia.</li>
-                  <li>Introducí la boleta en el &apos;sobre de resguardo&apos; y cerralo bien.</li>
-                  <li>Completá y firmá el formulario de declaración jurada de identidad.</li>
-                  <li>Colocá el &apos;sobre de resguardo&apos; y la declaración jurada dentro del &apos;sobre de envío&apos; y cerralo.</li>
-                  <li>Envialo por correo (es gratis) o depositalo en los buzones de tu consulado.</li>
-                </ol>
-              }
-            />
-            <QuestionAnswer
-              question="¿Hasta cuándo tengo tiempo de enviar mi voto?"
-              answer="Tu voto debe ser recibido en la representación diplomática o consular, a más tardar, el último día hábil anterior a la fecha de la elección en Argentina. ¡Asegúrate de enviarlo con suficiente anticipación!"
-            />
+      {/* Sección CTA 2027 */}
+      <section className="bg-yellow-400 text-gray-900 text-center py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold">¿NO PODÉS VOTAR EN 2025?</h2>
+          <p className="text-xl mt-2 mb-4">¡ASEGURÁ TU VOTO PARA 2027!</p>
+          <p className="max-w-2xl mx-auto">
+            El padrón para 2025 ya está cerrado. El paso más importante es tener tu domicilio en el exterior actualizado en tu DNI. ¡Hacelo ahora y preparate para las próximas elecciones!
+          </p>
+        </div>
+      </section>
+      
+      {/* Sección de Información Clave */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800">¿Cómo es el proceso?</h2>
+            <p className="text-gray-600 mt-2">Votar desde el exterior es más fácil de lo que pensás. La nueva normativa simplifica todo.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">1. Actualizá tu DNI</h3>
+              <p className="text-gray-600">El primer paso es registrar tu domicilio en el exterior en tu DNI. Esto te inscribe automáticamente en el padrón de residentes en el exterior.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">2. Elegí cómo votar</h3>
+              <p className="text-gray-600">Podés optar por el nuevo y sencillo sistema de **voto por correo postal** o votar de forma presencial en tu consulado.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md text-center">
+              <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">3. ¡Votá!</h3>
+              <p className="text-gray-600">Recibirás la boleta única en tu casa o podrás acercarte a la sede diplomática el día de la elección. ¡Tu participación es importante!</p>
+            </div>
+          </div>
+          <div className="text-center mt-12">
+             <a href="https://www.padron.gov.ar/cne_care/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-blue-800 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-900 transition-colors">
+              Consultá el Padrón de Residentes en el Exterior
+              <ExternalLink className="ml-2" size={20} />
+            </a>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* --- NUEVA SECCIÓN PARA RESULTADOS --- */}
+      <section className="bg-gray-100 py-16">
+        <div className="container mx-auto px-4 text-center">
+          <Archive className="w-12 h-12 text-blue-800 mx-auto mb-4" />
+          <h2 className="text-3xl font-bold text-gray-800">Consultá Elecciones Pasadas</h2>
+          <p className="text-gray-600 mt-2 mb-6 max-w-2xl mx-auto">
+            Explorá los resultados históricos del voto de los argentinos residentes en el exterior.
+          </p>
+          <Link href="/resultados" className="bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition-colors">
+            Ver Resultados Históricos
+          </Link>
+        </div>
+      </section>
+    </>
   );
 }

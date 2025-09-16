@@ -23,6 +23,7 @@ export function Header() {
           <Link href="/como-votar" className="hover:text-blue-600 transition-colors">Cómo Votar</Link>
           <Link href="/normativa" className="hover:text-blue-600 transition-colors">Normativa</Link>
           <Link href="/novedades" className="hover:text-blue-600 transition-colors">Novedades</Link>
+          <Link href="/resultados" className="hover:text-blue-600 transition-colors">Resultados</Link>
         </nav>
         
         <button 
@@ -39,6 +40,7 @@ export function Header() {
             <Link href="/como-votar" className="text-gray-700 hover:text-blue-600" onClick={() => setIsMenuOpen(false)}>Cómo Votar</Link>
             <Link href="/normativa" className="text-gray-700 hover:text-blue-600" onClick={() => setIsMenuOpen(false)}>Normativa</Link>
             <Link href="/novedades" className="text-gray-700 hover:text-blue-600" onClick={() => setIsMenuOpen(false)}>Novedades</Link>
+            <Link href="/resultados" className="text-gray-700 hover:text-blue-600" onClick={() => setIsMenuOpen(false)}>Resultados</Link>
           </nav>
         </div>
       )}
