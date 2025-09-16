@@ -1,14 +1,16 @@
 // src/app/como-votar/page.tsx
 import { HelpCircle } from "lucide-react";
+import Link from 'next/link';
 
+// Componente auxiliar para las preguntas y respuestas
 function QuestionAnswer({ question, answer }: { question: string, answer: React.ReactNode }) {
   return (
-    <div className="bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
       <div className="flex items-start">
-        <HelpCircle className="w-8 h-8 text-blue-500 mr-4 flex-shrink-0 mt-1" />
+        <HelpCircle className="w-8 h-8 text-blue-600 mr-4 flex-shrink-0 mt-1" />
         <div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">{question}</h3>
-          <div className="text-gray-700 leading-relaxed">{answer}</div>
+          <h3 className="text-xl font-semibold text-slate-800 mb-2">{question}</h3>
+          <div className="text-slate-700 leading-relaxed">{answer}</div>
         </div>
       </div>
     </div>
@@ -16,14 +18,16 @@ function QuestionAnswer({ question, answer }: { question: string, answer: React.
 }
 
 export default function ComoVotarPage() {
+  const linkStyles = "text-blue-600 font-semibold underline hover:text-blue-800 transition-colors";
+
   return (
-    <div className="bg-white py-12">
+    <div className="bg-slate-50 py-12 sm:py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold text-blue-900 mb-4 text-center">
             Cómo Votar desde el Exterior
           </h1>
-          <p className="text-lg text-gray-600 mb-10 text-center">
+          <p className="text-lg text-slate-600 mb-10 text-center">
             Aquí encontrarás las respuestas a las preguntas más frecuentes sobre el voto por correo postal, basado en la información oficial.
           </p>
 
@@ -42,14 +46,31 @@ export default function ComoVotarPage() {
                 <ul className="list-disc list-inside space-y-2">
                   <li>Tener 16 años o más.</li>
                   <li>Tener el domicilio en el exterior asentado en tu DNI (con una antigüedad de al menos 180 días antes de la elección).</li>
-                  <li>Estar incluido en el padrón electoral de residentes en el exterior.</li>
-                  <li>Inscribirte en el registro para votar por correo postal en las fechas habilitadas.</li>
+                  <li>
+                    Estar incluido en el {' '}
+                    <a href="https://www.padron.gob.ar/" target="_blank" rel="noopener noreferrer" className={linkStyles}>
+                      padrón electoral de residentes en el exterior
+                    </a>.
+                  </li>
+                  <li>
+                    <a href="https://www.padron.gov.ar/cne_care/care_postal_consulta.php" target="_blank" rel="noopener noreferrer" className={linkStyles}>
+                      Inscribirte en el registro para votar por correo postal
+                    </a>{' '}
+                    en las fechas habilitadas.
+                  </li>
                 </ul>
               }
             />
             <QuestionAnswer
               question="¿Cuándo y cómo me inscribo para votar por correo?"
-              answer="La inscripción se realiza en un formulario online en la web de la Cámara Nacional Electoral. Para las elecciones de 2025, el período de inscripción fue del 29 de mayo al 28 de junio. Es crucial estar atento a estas fechas para futuras elecciones."
+              answer={
+                <>
+                  La inscripción se realiza en un formulario online en la web de la Cámara Nacional Electoral. Para las elecciones de 2025, el período de inscripción fue del 29 de mayo al 28 de junio.{' '}
+                  <Link href="/#formulario-suscripcion" className={linkStyles}>
+                    Es crucial estar atento a estas fechas para futuras elecciones.
+                  </Link>
+                </>
+              }
             />
             <QuestionAnswer
               question="Si me inscribí para voto postal, ¿puedo votar en el consulado?"
@@ -60,16 +81,23 @@ export default function ComoVotarPage() {
               answer={
                 <ol className="list-decimal list-inside space-y-2">
                   <li>Marcá en la Boleta Única de Papel (BUP) la opción de tu preferencia.</li>
-                  <li>Introducí la boleta en el &apos;sobre de resguardo&apos; y cerralo bien.</li>
+                  <li>Introducí la boleta en el 'sobre de resguardo' y cerralo bien.</li>
                   <li>Completá y firmá el formulario de declaración jurada de identidad.</li>
-                  <li>Colocá el &apos;sobre de resguardo&apos; y la declaración jurada dentro del &apos;sobre de envío&apos; y cerralo.</li>
+                  <li>Colocá el 'sobre de resguardo' y la declaración jurada dentro del 'sobre de envío' y cerralo.</li>
                   <li>Envialo por correo (es gratis) o depositalo en los buzones de tu consulado.</li>
                 </ol>
               }
             />
             <QuestionAnswer
               question="¿Hasta cuándo tengo tiempo de enviar mi voto?"
-              answer="Tu voto debe ser recibido en la representación diplomática o consular, a más tardar, el último día hábil anterior a la fecha de la elección en Argentina. ¡Asegúrate de enviarlo con suficiente anticipación!"
+              answer={
+                <>
+                  Tu voto debe ser recibido en la representación diplomática o consular, a más tardar, el último día hábil anterior a la fecha de la elección en Argentina.{' '}
+                  <Link href="/#formulario-suscripcion" className={linkStyles}>
+                    ¡Asegúrate de enviarlo con suficiente anticipación!
+                  </Link>
+                </>
+              }
             />
           </div>
         </div>
