@@ -1,5 +1,6 @@
 // src/components/Footer.tsx
 import Link from 'next/link';
+import Image from 'next/image'; // Importamos el componente Image
 import { Info, Twitter, Youtube, Facebook } from 'lucide-react';
 import { Logo } from './Logo';
 
@@ -9,7 +10,6 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
           
-          {/* Columna principal con el logo y descripción */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
               <Logo />
@@ -20,7 +20,6 @@ export function Footer() {
             </p>
           </div>
           
-          {/* Columna de Navegación */}
           <div>
             <h3 className="font-semibold text-slate-900 mb-3">Navegación</h3>
             <ul className="space-y-2 text-slate-600">
@@ -31,7 +30,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Columna de Recursos */}
           <div>
             <h3 className="font-semibold text-slate-900 mb-3">Recursos</h3>
             <ul className="space-y-2 text-slate-600">
@@ -48,9 +46,8 @@ export function Footer() {
             </ul>
           </div>
           
-          {/* --- NUEVA COLUMNA DE REDES SOCIALES --- */}
           <div>
-            <h3 className="font-semibold text-slate-900 mb-3">Seguinos</h3>
+            <h3 className="font-semibold text-slate-900 mb-3">Seguinos y Apoyanos</h3>
             <div className="flex items-center space-x-4">
               <a href="https://x.com/RepublicanosAmi" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-slate-500 hover:text-slate-900 transition-colors">
                 <Twitter size={24} />
@@ -62,6 +59,19 @@ export function Footer() {
                 <Facebook size={24} />
               </a>
             </div>
+
+            {/* --- CÓDIGO QR AÑADIDO --- */}
+            <div className="mt-4">
+              <p className="text-xs text-slate-500 mb-2">O escaneá para donar:</p>
+              <Image
+                src="/images/bmc_qr.png"
+                alt="Código QR para donar en Buy Me a Coffee"
+                width={120}
+                height={120}
+                className="rounded-lg border border-slate-200"
+              />
+            </div>
+            
           </div>
           
         </div>
