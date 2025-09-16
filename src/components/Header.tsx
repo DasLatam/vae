@@ -14,8 +14,10 @@ export function Header() {
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-3" onClick={() => setIsMenuOpen(false)}>
           <Logo />
+          {/* --- LÍNEA MODIFICADA --- */}
           <span className="text-xl font-bold text-slate-800 tracking-tight">
             VAE
+            <span className="hidden sm:inline"> - Voto Argentino en el Exterior</span>
           </span>
         </Link>
         
