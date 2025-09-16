@@ -1,19 +1,41 @@
 // src/app/novedades/page.tsx
 import { supabase } from '@/lib/supabaseClient';
 import Link from 'next/link';
+import { Pagination } from '@/components/Pagination'; // Importamos el nuevo componente
 
 export const revalidate = 0;
 
-export default async function NovedadesPage() {
+// La página ahora recibe 'searchParams' para saber en qué página estamos
+export default async function NovedadesPage({ 
+  searchParams 
+}: { 
+  searchParams: { page?: string } 
+}) {
+  const itemsPerPage = 6;
+  const currentPage = parseInt(searchParams.page || '1', 10);
+  
+  // Calculamos el rango de items a pedir a la base de datos
+  const from = (currentPage - 1) * itemsPerPage;
+  const to = from + itemsPerPage - 1;
+
+  // Primero, obtenemos el conteo total de noticias
+  const { count, error: countError } = await supabase
+    .from('novedades')
+    .select('*', { count: 'exact', head: true });
+
+  // Luego, obtenemos solo la página de noticias que necesitamos
   const { data: novedades, error } = await supabase
     .from('novedades')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .range(from, to);
 
-  if (error) {
+  if (error || countError) {
     return <p className="text-center text-red-500 py-10">Error al cargar las noticias.</p>;
   }
   
+  const totalPages = Math.ceil((count || 0) / itemsPerPage);
+
   return (
     <div className="bg-slate-50 py-12 sm:py-16">
       <div className="container mx-auto px-4">
@@ -30,7 +52,6 @@ export default async function NovedadesPage() {
           ) : (
             <div className="space-y-8">
               {novedades.map((noticia) => (
-                // Ahora cada tarjeta es un enlace a su propia página
                 <Link key={noticia.id} href={`/novedades/${noticia.id}`} className="block bg-white p-6 rounded-lg shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-300 transition-all">
                   <p className="text-sm text-slate-500 mb-2">
                     {new Date(noticia.created_at).toLocaleDateString('es-AR', {
@@ -46,6 +67,9 @@ export default async function NovedadesPage() {
               ))}
             </div>
           )}
+
+          {/* Añadimos el componente de paginación al final */}
+          <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/novedades" />
         </div>
       </div>
     </div>
