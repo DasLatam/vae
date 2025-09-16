@@ -1,6 +1,7 @@
 // src/app/page.tsx
 import Link from 'next/link';
-import { CheckCircle, ExternalLink, Archive } from 'lucide-react';
+import { CheckCircle, ExternalLink, Archive, Mail } from 'lucide-react';
+import { NewsletterForm } from '@/components/NewsletterForm'; // Importar el formulario
 
 export default function HomePage() {
   return (
@@ -62,7 +63,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- NUEVA SECCIÓN PARA RESULTADOS --- */}
+      {/* Sección de Resultados */}
       <section className="bg-gray-100 py-16">
         <div className="container mx-auto px-4 text-center">
           <Archive className="w-12 h-12 text-blue-800 mx-auto mb-4" />
@@ -73,6 +74,18 @@ export default function HomePage() {
           <Link href="/resultados" className="bg-gray-800 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition-colors">
             Ver Resultados Históricos
           </Link>
+        </div>
+      </section>
+
+      {/* --- NUEVA SECCIÓN DE NOVEDADES --- */}
+      <section className="bg-blue-50 py-16">
+        <div className="container mx-auto px-4 flex flex-col items-center text-center">
+          <Mail className="w-12 h-12 text-blue-800 mx-auto mb-4" />
+          <h2 className="text-3xl font-bold text-gray-800">Recibí las Alertas Electorales</h2>
+          <p className="text-gray-600 mt-2 mb-6 max-w-2xl mx-auto">
+            Registrate para recibir recordatorios de fechas importantes, novedades y alertas sobre el padrón electoral.
+          </p>
+          <NewsletterForm />
         </div>
       </section>
     </>
