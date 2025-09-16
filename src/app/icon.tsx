@@ -12,19 +12,17 @@ export default function Icon() {
     (
       <div
         style={{
-          fontSize: 24,
-          background: '#75AADB',
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'white',
+          fontSize: 24,
+          background: '#E0F2FE', // Mismo fondo que el logo
           borderRadius: '6px',
-          fontWeight: 'bold',
         }}
       >
-        V
+        🗳️
       </div>
     ),
     {
