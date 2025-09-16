@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { enviarRespuestaEncuesta } from '@/app/actions';
 import Link from 'next/link';
+import { listaDePaises, provinciasArgentinas, partidosPorProvincia } from '@/lib/datosElectorales'; // Importamos los datos
 
 type Encuesta = {
   id: number;
@@ -14,50 +15,52 @@ type Encuesta = {
 
 export default function EncuestaPage({ params }: { params: { id: string } }) {
   const [encuesta, setEncuesta] = useState<Encuesta | null>(null);
-  const [haVotado, setHaVotado] = useState(true); // Empezamos asumiendo que ya votó
+  const [haVotado, setHaVotado] = useState(true);
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(true);
+  
+  // Estados para los combos anidados
+  const [provinciaSeleccionada, setProvinciaSeleccionada] = useState('');
+  const [partidosDisponibles, setPartidosDisponibles] = useState<string[]>([]);
 
   const idEncuesta = params.id;
   const storageKey = `haVotadoEncuesta_${idEncuesta}`;
 
   useEffect(() => {
-    // Verificar si ya votó en el almacenamiento local
     if (localStorage.getItem(storageKey)) {
       setHaVotado(true);
     } else {
       setHaVotado(false);
     }
 
-    // Cargar los datos de la encuesta
     async function cargarEncuesta() {
-      const { data } = await supabase
-        .from('encuestas')
-        .select('*')
-        .eq('id', idEncuesta)
-        .single();
+      const { data } = await supabase.from('encuestas').select('*').eq('id', idEncuesta).single();
       setEncuesta(data);
       setCargando(false);
     }
     cargarEncuesta();
   }, [idEncuesta, storageKey]);
 
+  // Efecto para actualizar los partidos cuando cambia la provincia
+  useEffect(() => {
+    if (provinciaSeleccionada && partidosPorProvincia[provinciaSeleccionada]) {
+      setPartidosDisponibles(partidosPorProvincia[provinciaSeleccionada]);
+    } else {
+      setPartidosDisponibles([]);
+    }
+  }, [provinciaSeleccionada]);
+
   async function handleSubmit(formData: FormData) {
     const resultado = await enviarRespuestaEncuesta(formData);
     setMensaje(resultado.message);
     if (resultado.success) {
-      localStorage.setItem(storageKey, 'true'); // Marcar como votado
+      localStorage.setItem(storageKey, 'true');
       setHaVotado(true);
     }
   }
 
-  if (cargando) {
-    return <div className="text-center py-20">Cargando encuesta...</div>;
-  }
-  
-  if (!encuesta) {
-    return <div className="text-center py-20">Encuesta no encontrada.</div>;
-  }
+  if (cargando) return <div className="text-center py-20">Cargando encuesta...</div>;
+  if (!encuesta) return <div className="text-center py-20">Encuesta no encontrada.</div>;
 
   return (
     <div className="bg-slate-50 py-12">
@@ -68,9 +71,7 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
 
           {haVotado ? (
             <div className="text-center bg-blue-50 p-6 rounded-lg">
-              <h2 className="text-2xl font-bold text-blue-800">
-                {mensaje || '¡Gracias por participar!'}
-              </h2>
+              <h2 className="text-2xl font-bold text-blue-800">{mensaje || '¡Gracias por participar!'}</h2>
               <p className="text-slate-600 mt-2">Tu opinión es muy importante para nuestra comunidad.</p>
               <Link href={`/encuestas/${idEncuesta}/resultados`} className="mt-4 inline-block bg-blue-600 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-700">
                 Ver Resultados
@@ -80,28 +81,41 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
             <form action={handleSubmit} className="space-y-6">
               <input type="hidden" name="encuesta_id" value={encuesta.id} />
               
-              {/* Aquí van las preguntas */}
+              <div>
+                <label className="font-semibold">Última provincia donde viviste en Argentina: *</label>
+                <select 
+                  name="ultima_provincia" 
+                  required 
+                  className="mt-2 block w-full p-3 border border-gray-300 rounded-md"
+                  value={provinciaSeleccionada}
+                  onChange={(e) => setProvinciaSeleccionada(e.target.value)}
+                >
+                  <option value="">Selecciona una provincia</option>
+                  {provinciasArgentinas.map(p => <option key={p} value={p}>{p}</option>)}
+                </select>
+              </div>
+
               <div>
                 <label className="font-semibold">¿A qué partido político votarías? *</label>
-                <select name="partido_politico" required className="mt-2 block w-full p-3 border border-gray-300 rounded-md">
-                  <option value="">Selecciona una opción</option>
-                  <option>La Libertad Avanza</option>
-                  <option>Juntos por el Cambio</option>
-                  <option>Unión por la Patria</option>
-                  <option>Frente de Izquierda</option>
+                <select 
+                  name="partido_politico" 
+                  required 
+                  className="mt-2 block w-full p-3 border border-gray-300 rounded-md"
+                  disabled={!provinciaSeleccionada} // Deshabilitado hasta que se elija provincia
+                >
+                  <option value="">{provinciaSeleccionada ? "Selecciona una opción" : "Primero elegí una provincia"}</option>
+                  {partidosDisponibles.map(p => <option key={p} value={p}>{p}</option>)}
                   <option>Otro</option>
-                  <option>No sabe / No contesta</option>
+                  <option>En Blanco / No sabe</option>
                 </select>
               </div>
 
               <div>
                 <label className="font-semibold">País donde vivís actualmente:</label>
-                <input type="text" name="pais_residencia" className="mt-2 block w-full p-3 border border-gray-300 rounded-md" />
-              </div>
-
-              <div>
-                <label className="font-semibold">Última provincia donde viviste en Argentina: *</label>
-                <input type="text" name="ultima_provincia" required className="mt-2 block w-full p-3 border border-gray-300 rounded-md" />
+                <select name="pais_residencia" className="mt-2 block w-full p-3 border border-gray-300 rounded-md">
+                  <option value="">Selecciona un país</option>
+                  {listaDePaises.map(p => <option key={p} value={p}>{p}</option>)}
+                </select>
               </div>
 
               <div>
