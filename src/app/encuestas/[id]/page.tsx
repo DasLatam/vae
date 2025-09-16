@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { enviarRespuestaEncuesta } from '@/app/actions';
 import Link from 'next/link';
-import { listaDePaises, provinciasArgentinas, partidosPorProvincia } from '@/lib/datosElectorales'; // Importamos los datos
+import { listaDePaises, provinciasArgentinas, partidosPorProvincia } from '@/lib/datosElectorales';
 
 type Encuesta = {
   id: number;
@@ -18,8 +18,8 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
   const [haVotado, setHaVotado] = useState(true);
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false); // 1. Nuevo estado para "enviando"
   
-  // Estados para los combos anidados
   const [provinciaSeleccionada, setProvinciaSeleccionada] = useState('');
   const [partidosDisponibles, setPartidosDisponibles] = useState<string[]>([]);
 
@@ -41,7 +41,6 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
     cargarEncuesta();
   }, [idEncuesta, storageKey]);
 
-  // Efecto para actualizar los partidos cuando cambia la provincia
   useEffect(() => {
     if (provinciaSeleccionada && partidosPorProvincia[provinciaSeleccionada]) {
       setPartidosDisponibles(partidosPorProvincia[provinciaSeleccionada]);
@@ -51,12 +50,14 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
   }, [provinciaSeleccionada]);
 
   async function handleSubmit(formData: FormData) {
+    setIsSubmitting(true); // 2. Indicar que el envío comenzó
     const resultado = await enviarRespuestaEncuesta(formData);
     setMensaje(resultado.message);
     if (resultado.success) {
       localStorage.setItem(storageKey, 'true');
       setHaVotado(true);
     }
+    setIsSubmitting(false); // 3. Indicar que el envío terminó
   }
 
   if (cargando) return <div className="text-center py-20">Cargando encuesta...</div>;
@@ -101,7 +102,7 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
                   name="partido_politico" 
                   required 
                   className="mt-2 block w-full p-3 border border-gray-300 rounded-md"
-                  disabled={!provinciaSeleccionada} // Deshabilitado hasta que se elija provincia
+                  disabled={!provinciaSeleccionada}
                 >
                   <option value="">{provinciaSeleccionada ? "Selecciona una opción" : "Primero elegí una provincia"}</option>
                   {partidosDisponibles.map(p => <option key={p} value={p}>{p}</option>)}
@@ -129,8 +130,13 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
                 </select>
               </div>
 
-              <button type="submit" className="w-full bg-gray-800 text-white font-bold py-3 px-6 rounded-lg hover:bg-black">
-                Enviar Voto
+              {/* 4. Botón actualizado */}
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="w-full bg-gray-800 text-white font-bold py-3 px-6 rounded-lg hover:bg-black transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? 'Enviando...' : 'Enviar Voto'}
               </button>
             </form>
           )}
