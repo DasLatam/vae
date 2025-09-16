@@ -1,24 +1,14 @@
 // src/app/como-votar/page.tsx
 import { HelpCircle } from "lucide-react";
 import Link from 'next/link';
-
-// Componente auxiliar para las preguntas y respuestas
-function QuestionAnswer({ question, answer }: { question: string, answer: React.ReactNode }) {
-  return (
-    <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
-      <div className="flex items-start">
-        <HelpCircle className="w-8 h-8 text-blue-600 mr-4 flex-shrink-0 mt-1" />
-        <div>
-          <h3 className="text-xl font-semibold text-slate-800 mb-2">{question}</h3>
-          <div className="text-slate-700 leading-relaxed">{answer}</div>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { ShareButtons } from '@/components/ShareButtons'; // 1. Importar el componente
 
 export default function ComoVotarPage() {
   const linkStyles = "text-blue-600 font-semibold underline hover:text-blue-800 transition-colors";
+  
+  // 2. Definir título y URL para compartir
+  const shareTitle = "Cómo Votar desde el Exterior: Guía Paso a Paso";
+  const shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/como-votar`;
 
   return (
     <div className="bg-slate-50 py-12 sm:py-16">
@@ -32,6 +22,7 @@ export default function ComoVotarPage() {
           </p>
 
           <div className="space-y-8">
+            {/* El contenido de las preguntas y respuestas no cambia... */}
             <QuestionAnswer
               question="¿Qué se vota en las elecciones de 2025?"
               answer="Los argentinos residentes en el exterior votan para elegir Diputados Nacionales de todo el país y Senadores Nacionales de las provincias que renuevan sus bancas (Chaco, Entre Ríos, Neuquén, Río Negro, Salta, Santiago del Estero, Tierra del Fuego) y de Capital Federal."
@@ -46,31 +37,14 @@ export default function ComoVotarPage() {
                 <ul className="list-disc list-inside space-y-2">
                   <li>Tener 16 años o más.</li>
                   <li>Tener el domicilio en el exterior asentado en tu DNI (con una antigüedad de al menos 180 días antes de la elección).</li>
-                  <li>
-                    Estar incluido en el {' '}
-                    <a href="https://www.padron.gob.ar/" target="_blank" rel="noopener noreferrer" className={linkStyles}>
-                      padrón electoral de residentes en el exterior
-                    </a>.
-                  </li>
-                  <li>
-                    <a href="https://www.padron.gov.ar/cne_care/care_postal_consulta.php" target="_blank" rel="noopener noreferrer" className={linkStyles}>
-                      Inscribirte en el registro para votar por correo postal
-                    </a>{' '}
-                    en las fechas habilitadas.
-                  </li>
+                  <li>Estar incluido en el <a href="https://www.padron.gob.ar/" target="_blank" rel="noopener noreferrer" className={linkStyles}>padrón electoral de residentes en el exterior</a>.</li>
+                  <li><a href="https://www.padron.gov.ar/cne_care/care_postal_consulta.php" target="_blank" rel="noopener noreferrer" className={linkStyles}>Inscribirte en el registro para votar por correo postal</a> en las fechas habilitadas.</li>
                 </ul>
               }
             />
             <QuestionAnswer
               question="¿Cuándo y cómo me inscribo para votar por correo?"
-              answer={
-                <>
-                  La inscripción se realiza en un formulario online en la web de la Cámara Nacional Electoral. Para las elecciones de 2025, el período de inscripción fue del 29 de mayo al 28 de junio.{' '}
-                  <Link href="/#formulario-suscripcion" className={linkStyles}>
-                    Es crucial estar atento a estas fechas para futuras elecciones.
-                  </Link>
-                </>
-              }
+              answer={<>La inscripción se realiza en un formulario online en la web de la Cámara Nacional Electoral. Para las elecciones de 2025, el período de inscripción fue del 29 de mayo al 28 de junio. <Link href="/#formulario-suscripcion" className={linkStyles}>Es crucial estar atento a estas fechas para futuras elecciones.</Link></>}
             />
             <QuestionAnswer
               question="Si me inscribí para voto postal, ¿puedo votar en el consulado?"
@@ -90,16 +64,28 @@ export default function ComoVotarPage() {
             />
             <QuestionAnswer
               question="¿Hasta cuándo tengo tiempo de enviar mi voto?"
-              answer={
-                <>
-                  Tu voto debe ser recibido en la representación diplomática o consular, a más tardar, el último día hábil anterior a la fecha de la elección en Argentina.{' '}
-                  <Link href="/#formulario-suscripcion" className={linkStyles}>
-                    ¡Asegúrate de enviarlo con suficiente anticipación!
-                  </Link>
-                </>
-              }
+              answer={<>Tu voto debe ser recibido en la representación diplomática o consular, a más tardar, el último día hábil anterior a la fecha de la elección en Argentina. <Link href="/#formulario-suscripcion" className={linkStyles}>¡Asegúrate de enviarlo con suficiente anticipación!</Link></>}
             />
           </div>
+          
+          {/* 3. Añadir la botonera al final */}
+          <div className="mt-12 py-6 border-t border-slate-200">
+            <ShareButtons title={shareTitle} url={shareUrl} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function QuestionAnswer({ question, answer }: { question: string, answer: React.ReactNode }) {
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+      <div className="flex items-start">
+        <HelpCircle className="w-8 h-8 text-blue-600 mr-4 flex-shrink-0 mt-1" />
+        <div>
+          <h3 className="text-xl font-semibold text-slate-800 mb-2">{question}</h3>
+          <div className="text-slate-700 leading-relaxed">{answer}</div>
         </div>
       </div>
     </div>
