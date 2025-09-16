@@ -2,10 +2,11 @@
 import { supabase } from '@/lib/supabaseClient';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
+import { ArrowLeftCircle, ArrowRightCircle } from 'lucide-react';
 
 export const revalidate = 60; // Revalida la página cada 60 segundos
 
-// Props para recibir el ID de la URL
 type NoticiaPageProps = {
   params: {
     id: string;
@@ -13,22 +14,33 @@ type NoticiaPageProps = {
 }
 
 export default async function NoticiaPage({ params }: NoticiaPageProps) {
-  // Pedimos a Supabase solo la noticia con el ID que viene en la URL
+  // 1. Obtenemos la lista completa de noticias, ordenadas por fecha
+  const { data: todasLasNovedades } = await supabase
+    .from('novedades')
+    .select('id')
+    .order('created_at', { ascending: false });
+
+  // 2. Obtenemos la noticia actual
   const { data: noticia, error } = await supabase
     .from('novedades')
     .select('*')
     .eq('id', params.id)
     .single();
 
-  // Si no se encuentra la noticia o hay un error, mostramos página 404
-  if (error || !noticia) {
+  if (error || !noticia || !todasLasNovedades) {
     notFound();
   }
+
+  // 3. Encontramos la posición de la noticia actual en la lista
+  const currentIndex = todasLasNovedades.findIndex(item => item.id === noticia.id);
+  const prevNoticia = currentIndex > 0 ? todasLasNovedades[currentIndex - 1] : null;
+  const nextNoticia = currentIndex < todasLasNovedades.length - 1 ? todasLasNovedades[currentIndex + 1] : null;
 
   return (
     <article className="bg-white py-12 sm:py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
+          {/* Contenido de la noticia */}
           <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
             {noticia.titulo}
           </h1>
@@ -53,10 +65,30 @@ export default async function NoticiaPage({ params }: NoticiaPageProps) {
             </div>
           )}
 
-          {/* Usamos prose para dar estilos automáticos al contenido del post */}
-          <div className="prose prose-lg max-w-none text-justify">
-            {noticia.contenido}
+          <div className="prose prose-lg max-w-none text-justify" dangerouslySetInnerHTML={{ __html: noticia.contenido.replace(/\n/g, '<br />') }}>
+            {/* El contenido se inserta aquí para interpretar saltos de línea */}
           </div>
+
+          {/* Menú de Navegación de Noticias */}
+          <hr className="my-12 border-slate-300" />
+          <nav className="flex justify-between items-center">
+            <div>
+              {prevNoticia && (
+                <Link href={`/novedades/${prevNoticia.id}`} className="inline-flex items-center text-slate-600 hover:text-blue-600 transition-colors">
+                  <ArrowLeftCircle className="mr-2" size={20} />
+                  Noticia Anterior
+                </Link>
+              )}
+            </div>
+            <div>
+              {nextNoticia && (
+                <Link href={`/novedades/${nextNoticia.id}`} className="inline-flex items-center text-slate-600 hover:text-blue-600 transition-colors">
+                  Próxima Noticia
+                  <ArrowRightCircle className="ml-2" size={20} />
+                </Link>
+              )}
+            </div>
+          </nav>
         </div>
       </div>
     </article>
