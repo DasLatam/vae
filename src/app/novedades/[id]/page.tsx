@@ -4,8 +4,9 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeftCircle, ArrowRightCircle } from 'lucide-react';
+import { ShareButtons } from '@/components/ShareButtons'; // Importamos el nuevo componente
 
-export const revalidate = 60; // Revalida la página cada 60 segundos
+export const revalidate = 60;
 
 type NoticiaPageProps = {
   params: {
@@ -14,13 +15,11 @@ type NoticiaPageProps = {
 }
 
 export default async function NoticiaPage({ params }: NoticiaPageProps) {
-  // 1. Obtenemos la lista completa de noticias, ordenadas por fecha
   const { data: todasLasNovedades } = await supabase
     .from('novedades')
     .select('id')
     .order('created_at', { ascending: false });
 
-  // 2. Obtenemos la noticia actual
   const { data: noticia, error } = await supabase
     .from('novedades')
     .select('*')
@@ -31,16 +30,17 @@ export default async function NoticiaPage({ params }: NoticiaPageProps) {
     notFound();
   }
 
-  // 3. Encontramos la posición de la noticia actual en la lista
   const currentIndex = todasLasNovedades.findIndex(item => item.id === noticia.id);
   const prevNoticia = currentIndex > 0 ? todasLasNovedades[currentIndex - 1] : null;
   const nextNoticia = currentIndex < todasLasNovedades.length - 1 ? todasLasNovedades[currentIndex + 1] : null;
+
+  // Construimos la URL completa para compartir
+  const fullUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/novedades/${noticia.id}`;
 
   return (
     <article className="bg-white py-12 sm:py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
-          {/* Contenido de la noticia */}
           <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
             {noticia.titulo}
           </h1>
@@ -66,12 +66,15 @@ export default async function NoticiaPage({ params }: NoticiaPageProps) {
           )}
 
           <div className="prose prose-lg max-w-none text-justify" dangerouslySetInnerHTML={{ __html: noticia.contenido.replace(/\n/g, '<br />') }}>
-            {/* El contenido se inserta aquí para interpretar saltos de línea */}
+          </div>
+
+          {/* --- BOTONERA PARA COMPARTIR AÑADIDA --- */}
+          <div className="mt-12 py-6 border-t border-slate-200">
+            <ShareButtons title={noticia.titulo} url={fullUrl} />
           </div>
 
           {/* Menú de Navegación de Noticias */}
-          <hr className="my-12 border-slate-300" />
-          <nav className="flex justify-between items-center">
+          <nav className="flex justify-between items-center border-t border-slate-200 pt-6">
             <div>
               {prevNoticia && (
                 <Link href={`/novedades/${prevNoticia.id}`} className="inline-flex items-center text-slate-600 hover:text-blue-600 transition-colors">
