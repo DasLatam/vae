@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VAE - Voto Argentino en el Exterior 🗳️🇦🇷
 
-## Getting Started
+## Sobre el Proyecto
 
-First, run the development server:
+**VAE** es una plataforma web cívica e independiente diseñada para informar, asesorar y facilitar el ejercicio del derecho al voto de los ciudadanos argentinos que residen en el extranjero. El sitio busca centralizar la información sobre normativas, procedimientos y fechas clave del calendario electoral, con un enfoque en la simplicidad y la claridad.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Este proyecto fue construido desde cero con el objetivo de ser un recurso confiable y accesible para la diáspora argentina, promoviendo la participación democrática sin importar las distancias.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Características Principales
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+El sitio web cuenta con las siguientes funcionalidades:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* **Guías Detalladas:** Secciones informativas como "Cómo Votar" y "Normativa" que explican el proceso y el marco legal de forma didáctica.
+* **Contenido Dinámico:** Una sección de "Novedades" gestionada a través de una base de datos, con paginación para una navegación fluida.
+* **Resultados Electorales:** Visualización de resultados históricos de elecciones pasadas.
+* **Formulario de Suscripción:** Un formulario de registro para que los usuarios reciban alertas sobre el calendario electoral, novedades y validación de datos.
+* **Transparencia y Colaboración:** Una página de "Transparencia" que detalla los gastos del proyecto y un botón de "Colaborar" para recibir apoyo de la comunidad.
+* **Páginas Legales:** Secciones de "Política de Privacidad" y "Términos y Condiciones" para cumplir con las buenas prácticas.
+* **Diseño Profesional:** Una interfaz de usuario limpia, moderna y completamente responsiva (adaptable a celulares, tablets y computadoras).
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Stack Tecnológico
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Este proyecto fue construido utilizando un stack de tecnologías modernas, eficientes y escalables:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* **Framework:** [Next.js](https://nextjs.org/) (React)
+* **Lenguaje:** [TypeScript](https://www.typescriptlang.org/)
+* **Estilos:** [Tailwind CSS](https://tailwindcss.com/)
+* **Base de Datos y Backend:** [Supabase](https://supabase.com/)
+* **Hosting:** [Vercel](https://vercel.com/)
+* **Iconos:** [Lucide React](https://lucide.dev/)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠️ Cómo Iniciar el Proyecto Localmente
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Si querés correr este proyecto en tu propia máquina, seguí estos pasos:
+
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [https://github.com/DasLatam/vae.git](https://github.com/DasLatam/vae.git)
+    cd vae
+    ```
+
+2.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
+
+3.  **Configurar las variables de entorno:**
+    Creá un archivo llamado `.env.local` en la raíz del proyecto y agregá las siguientes variables. Necesitarás una cuenta de Supabase para obtener estas claves.
+    ```
+    NEXT_PUBLIC_SUPABASE_URL=TU_URL_DE_PROYECTO_SUPABASE
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=TU_CLAVE_ANON_PUBLICA_DE_SUPABASE
+    NEXT_PUBLIC_SITE_URL=http://localhost:3000
+    ```
+
+4.  **Correr el servidor de desarrollo:**
+    ```bash
+    npm run dev
+    ```
+
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver el resultado.
+
+---
+
+## 🌐 Despliegue
+
+El sitio está configurado para un despliegue continuo en **Vercel**. Cada vez que se hace un `push` a la rama `main`, Vercel automáticamente construye y despliega la nueva versión.
+
+**Importante:** No olvides configurar las mismas variables de entorno (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, etc.) en el panel de configuración de tu proyecto en Vercel.
+
+---
+
+## 📧 Contacto
+
+Para cualquier consulta o sugerencia, podés escribir a: **republiaami@gmail.com**
