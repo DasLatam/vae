@@ -9,7 +9,6 @@ import { Menu, X, Heart } from 'lucide-react';
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  // URL de donación actualizada con tu link
   const urlDonacion = "https://buymeacoffee.com/amigosrepublicanos"; 
 
   return (
@@ -29,9 +28,10 @@ export function Header() {
           <Link href="/novedades" className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Novedades</Link>
           <Link href="/resultados" className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Resultados</Link>
           
-          <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="bg-amber-400 text-slate-900 font-bold py-2 px-4 rounded-full text-sm hover:bg-amber-500 transition-all flex items-center ml-4">
+          {/* Botón actualizado a "Colaborar" */}
+          <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm hover:bg-blue-700 transition-all flex items-center ml-4">
             <Heart size={16} className="mr-2" />
-            Invitame un café
+            Colaborar
           </a>
         </nav>
         
@@ -52,8 +52,8 @@ export function Header() {
             <Link href="/normativa" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Normativa</Link>
             <Link href="/novedades" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Novedades</Link>
             <Link href="/resultados" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Resultados</Link>
-            <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="bg-amber-100 text-amber-900 font-bold w-full text-center py-2 mt-2">
-              Invitame un café
+            <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="bg-blue-100 text-blue-800 font-bold w-full text-center py-2 mt-2">
+              Colaborar con el Proyecto
             </a>
           </nav>
         </div>

@@ -1,6 +1,6 @@
 // src/components/Footer.tsx
 import Link from 'next/link';
-import Image from 'next/image'; // Importamos el componente Image
+import Image from 'next/image';
 import { Info, Twitter, Youtube, Facebook } from 'lucide-react';
 import { Logo } from './Logo';
 
@@ -43,6 +43,12 @@ export function Footer() {
                   <Info size={16} className="mr-2" /> Consultar Padrón
                 </a>
               </li>
+              {/* --- NUEVO ENLACE DE TRANSPARENCIA --- */}
+              <li>
+                <Link href="/transparencia" className="hover:text-blue-600 flex items-center">
+                  <Info size={16} className="mr-2" /> Transparencia
+                </Link>
+              </li>
             </ul>
           </div>
           
@@ -59,8 +65,6 @@ export function Footer() {
                 <Facebook size={24} />
               </a>
             </div>
-
-            {/* --- CÓDIGO QR AÑADIDO --- */}
             <div className="mt-4">
               <p className="text-xs text-slate-500 mb-2">O escaneá para donar:</p>
               <Image
@@ -71,7 +75,6 @@ export function Footer() {
                 className="rounded-lg border border-slate-200"
               />
             </div>
-            
           </div>
           
         </div>
