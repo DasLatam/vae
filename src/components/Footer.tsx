@@ -13,7 +13,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
               <Logo />
-              <span className="text-xl font-bold text-slate-800">VAE</span>
+              <span className="text-xl font-bold text-slate-800">VAE - Voto Argentino en el Exterior</span>
             </div>
             <p className="text-slate-600 max-w-md text-sm">
               Plataforma de asesoramiento para facilitar el ejercicio del derecho al voto de los ciudadanos argentinos residentes en el extranjero.
