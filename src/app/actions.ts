@@ -7,7 +7,6 @@ import { supabase } from '@/lib/supabaseClient';
 export async function suscribirNovedades(formData: FormData) {
   const email = formData.get('email') as string;
   const nombre = formData.get('nombre') as string;
-  // ... (resto de la función como estaba)
   const apellido = formData.get('apellido') as string;
   const fecha_nacimiento = formData.get('fecha_nacimiento') as string;
   const pais = formData.get('pais') as string;
@@ -44,12 +43,20 @@ export async function suscribirNovedades(formData: FormData) {
 }
 
 
-// --- Función de la encuesta (MODIFICADA CON DEPURACIÓN) ---
+// --- Función de la encuesta (CORREGIDA Y FINAL) ---
 export async function enviarRespuestaEncuesta(formData: FormData) {
-  console.log('[ACCIÓN DE SERVIDOR INICIADA]: Se recibió una petición para guardar una respuesta.');
-
   try {
-    const encuestaId = formData.get('encuesta_id') as string;
+    const encuestaIdStr = formData.get('encuesta_id') as string;
+    
+    // --- NUEVA VALIDACIÓN ---
+    // Verificamos que el ID de la encuesta sea un número válido antes de continuar.
+    const encuestaId = parseInt(encuestaIdStr);
+    if (isNaN(encuestaId)) {
+      console.error('[VALIDACIÓN FALLIDA]: El ID de la encuesta no es un número válido. Valor recibido:', encuestaIdStr);
+      return { success: false, message: 'Error: ID de encuesta inválido.' };
+    }
+    // --- FIN DE LA VALIDACIÓN ---
+
     const rawData = {
       partido_politico: formData.get('partido_politico') as string,
       pais_residencia: formData.get('pais_residencia') as string,
@@ -57,34 +64,28 @@ export async function enviarRespuestaEncuesta(formData: FormData) {
       rango_edad: formData.get('rango_edad') as string,
     };
 
-    console.log('[DATOS RECIBIDOS]:', rawData);
-
     if (!rawData.partido_politico || !rawData.ultima_provincia || !rawData.rango_edad) {
-      console.error('[VALIDACIÓN FALLIDA]: Faltan campos requeridos.');
       return { success: false, message: 'Por favor, completa todos los campos requeridos.' };
     }
 
     const datosAInsertar = {
-      encuesta_id: parseInt(encuestaId),
+      encuesta_id: encuestaId,
       ...rawData
     };
-
-    console.log('[INTENTANDO INSERTAR]: Se van a guardar estos datos en Supabase:', datosAInsertar);
 
     const { error } = await supabase
       .from('respuestas_encuesta')
       .insert(datosAInsertar);
 
     if (error) {
-      console.error('[ERROR DE SUPABASE]: La base de datos devolvió un error:', error);
-      return { success: false, message: `Hubo un error al enviar tu respuesta. Código: ${error.code}` };
+      console.error('[ERROR DE SUPABASE]:', error);
+      return { success: false, message: `Hubo un error al guardar los datos. Código: ${error.code}` };
     }
 
-    console.log('[ÉXITO]: La respuesta fue guardada correctamente en la base de datos.');
     return { success: true, message: '¡Gracias por participar!' };
 
   } catch (e) {
-    console.error('[ERROR INESPERADO]: Ocurrió una excepción en la acción del servidor:', e);
+    console.error('[ERROR INESPERADO]:', e);
     return { success: false, message: 'Ocurrió un error inesperado en el servidor.' };
   }
 }
