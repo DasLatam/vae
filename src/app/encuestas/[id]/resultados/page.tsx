@@ -1,30 +1,41 @@
 // src/app/encuestas/[id]/resultados/page.tsx
 import { supabase } from '@/lib/supabaseClient';
-import { NewsletterForm } from '@/components/NewsletterForm'; // Importamos el formulario
-import { Mail } from 'lucide-react'; // Importamos el ícono
+import { NewsletterForm } from '@/components/NewsletterForm';
+import { Mail } from 'lucide-react';
 
-// Con esta línea, forzamos a que la página siempre pida los datos más recientes
 export const revalidate = 0;
+
+// 1. Definimos un "tipo" para nuestros resultados para que TypeScript entienda la estructura
+type Resultado = {
+    partido: string;
+    votos: number;
+    porcentaje: number;
+};
 
 async function getResultados(encuestaId: string) {
     const { data, error, count } = await supabase
         .from('respuestas_encuesta')
-        .select('*', { count: 'exact' }) // Usamos count: 'exact' para obtener el total
+        .select('partido_politico', { count: 'exact' })
         .eq('encuesta_id', encuestaId);
 
-    if (error) return null;
+    if (error) {
+        console.error("Error fetching results:", error);
+        return null;
+    }
 
-    // Contamos los votos por partido
-    const conteo = data.reduce((acc, { partido_politico }) => {
-        if (partido_politico) {
-            acc[partido_politico] = (acc[partido_politico] || 0) + 1;
+    // 2. Le decimos a TypeScript que el acumulador será un Record<string, number>
+    const conteo = data.reduce((acc: Record<string, number>, respuesta) => {
+        const partido = respuesta.partido_politico;
+        if (partido) {
+            acc[partido] = (acc[partido] || 0) + 1;
         }
         return acc;
-    }, {} as Record<string, number>);
+    }, {});
 
     const totalVotos = count || 0;
     
-    const resultados = Object.entries(conteo)
+    // 3. Le decimos a TypeScript que el array final será del tipo "Resultado"
+    const resultados: Resultado[] = Object.entries(conteo)
         .map(([partido, votos]) => ({
             partido,
             votos,
@@ -45,7 +56,6 @@ export default async function ResultadosPage({ params }: { params: { id: string 
     return (
         <div className="bg-slate-50 py-12">
             <div className="container mx-auto px-4 max-w-2xl space-y-12">
-                {/* Sección de Resultados */}
                 <div className="bg-white p-8 rounded-lg shadow-lg border">
                     <h1 className="text-3xl font-bold text-center mb-2">Resultados Parciales de la Encuesta</h1>
                     <p className="text-slate-600 text-center mb-8">Total de votos recibidos hasta ahora: {totalVotos}</p>
@@ -68,7 +78,6 @@ export default async function ResultadosPage({ params }: { params: { id: string 
                     </div>
                 </div>
 
-                {/* Sección de Suscripción */}
                 <div id="formulario-suscripcion" className="bg-white p-8 rounded-lg shadow-lg border text-center">
                     <Mail className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                     <h2 className="text-2xl font-bold">¿Querés recibir los resultados finales?</h2>
