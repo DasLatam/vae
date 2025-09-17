@@ -4,15 +4,44 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeftCircle, ArrowRightCircle } from 'lucide-react';
-import { ShareButtons } from '@/components/ShareButtons'; // Importamos el nuevo componente
-
-export const revalidate = 60;
+import { ShareButtons } from '@/components/ShareButtons';
+import type { Metadata } from 'next';
 
 type NoticiaPageProps = {
-  params: {
-    id: string;
+  params: { id: string }
+}
+
+export async function generateMetadata({ params }: NoticiaPageProps): Promise<Metadata> {
+  const { data: noticia } = await supabase
+    .from('novedades')
+    .select('titulo, bajada, imagen_destacada_url')
+    .eq('id', params.id)
+    .single();
+
+  if (!noticia) {
+    return {
+      title: "Noticia no encontrada",
+    }
+  }
+
+  return {
+    title: `${noticia.titulo} | VAE`,
+    description: noticia.bajada,
+    openGraph: {
+      title: noticia.titulo,
+      description: noticia.bajada,
+      images: [
+        {
+          url: noticia.imagen_destacada_url || "/social-share-card.png",
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
   }
 }
+
+export const revalidate = 60;
 
 export default async function NoticiaPage({ params }: NoticiaPageProps) {
   const { data: todasLasNovedades } = await supabase
@@ -33,8 +62,6 @@ export default async function NoticiaPage({ params }: NoticiaPageProps) {
   const currentIndex = todasLasNovedades.findIndex(item => item.id === noticia.id);
   const prevNoticia = currentIndex > 0 ? todasLasNovedades[currentIndex - 1] : null;
   const nextNoticia = currentIndex < todasLasNovedades.length - 1 ? todasLasNovedades[currentIndex + 1] : null;
-
-  // Construimos la URL completa para compartir
   const fullUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/novedades/${noticia.id}`;
 
   return (
@@ -58,9 +85,10 @@ export default async function NoticiaPage({ params }: NoticiaPageProps) {
               <Image 
                 src={noticia.imagen_destacada_url} 
                 alt={`Imagen destacada para ${noticia.titulo}`}
-                width={800}
-                height={450}
+                width={640}  // --- ANCHO MODIFICADO ---
+                height={240} // --- ALTO MODIFICADO ---
                 className="w-full h-auto object-cover"
+                priority
               />
             </div>
           )}
@@ -68,28 +96,16 @@ export default async function NoticiaPage({ params }: NoticiaPageProps) {
           <div className="prose prose-lg max-w-none text-justify" dangerouslySetInnerHTML={{ __html: noticia.contenido.replace(/\n/g, '<br />') }}>
           </div>
 
-          {/* --- BOTONERA PARA COMPARTIR AÑADIDA --- */}
           <div className="mt-12 py-6 border-t border-slate-200">
             <ShareButtons title={noticia.titulo} url={fullUrl} />
           </div>
 
-          {/* Menú de Navegación de Noticias */}
           <nav className="flex justify-between items-center border-t border-slate-200 pt-6">
             <div>
-              {prevNoticia && (
-                <Link href={`/novedades/${prevNoticia.id}`} className="inline-flex items-center text-slate-600 hover:text-blue-600 transition-colors">
-                  <ArrowLeftCircle className="mr-2" size={20} />
-                  Noticia Anterior
-                </Link>
-              )}
+              {prevNoticia && (<Link href={`/novedades/${prevNoticia.id}`} className="inline-flex items-center text-slate-600 hover:text-blue-600 transition-colors"><ArrowLeftCircle className="mr-2" size={20} />Noticia Anterior</Link>)}
             </div>
             <div>
-              {nextNoticia && (
-                <Link href={`/novedades/${nextNoticia.id}`} className="inline-flex items-center text-slate-600 hover:text-blue-600 transition-colors">
-                  Próxima Noticia
-                  <ArrowRightCircle className="ml-2" size={20} />
-                </Link>
-              )}
+              {nextNoticia && (<Link href={`/novedades/${nextNoticia.id}`} className="inline-flex items-center text-slate-600 hover:text-blue-600 transition-colors">Próxima Noticia<ArrowRightCircle className="ml-2" size={20} /></Link>)}
             </div>
           </nav>
         </div>
