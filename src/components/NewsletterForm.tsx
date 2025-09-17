@@ -3,6 +3,7 @@
 
 import { useState, useRef } from 'react';
 import { suscribirNovedades } from '@/app/actions';
+import { listaDePaises, provinciasArgentinas } from '@/lib/datosElectorales'; // 1. Importamos las listas
 
 export function NewsletterForm() {
   const [message, setMessage] = useState('');
@@ -47,20 +48,26 @@ export function NewsletterForm() {
             <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"/>
           </div>
           <div>
-            {/* --- LÍNEA CORREGIDA --- */}
             <label htmlFor="celular" className="block text-sm font-medium text-gray-700 text-left">Celular</label>
             <input type="tel" name="celular" id="celular" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"/>
           </div>
         </div>
         
+        {/* --- CAMPOS ACTUALIZADOS A COMBOBOX --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label htmlFor="pais" className="block text-sm font-medium text-gray-700 text-left">País de Residencia</label>
-            <input type="text" name="pais" id="pais" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"/>
+            <select name="pais" id="pais" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+              <option value="">Selecciona un país</option>
+              {listaDePaises.map(p => <option key={p} value={p}>{p}</option>)}
+            </select>
           </div>
           <div>
-            <label htmlFor="provincia" className="block text-sm font-medium text-gray-700 text-left">Provincia de Origen (Argentina)</label>
-            <input type="text" name="provincia" id="provincia" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"/>
+            <label htmlFor="provincia" className="block text-sm font-medium text-gray-700 text-left">Provincia de Origen</label>
+            <select name="provincia" id="provincia" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+              <option value="">Selecciona una provincia</option>
+              {provinciasArgentinas.map(p => <option key={p} value={p}>{p}</option>)}
+            </select>
           </div>
         </div>
 
