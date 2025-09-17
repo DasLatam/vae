@@ -25,8 +25,6 @@ const colorMap: Record<string, string> = {
 
 export function ElectionBarChart({ data, title }: ElectionBarChartProps) {
   const totalVotos = data.reduce((sum, item) => sum + item.votos, 0);
-
-  // Ordenamos los resultados de mayor a menor
   const sortedData = [...data].sort((a, b) => b.votos - a.votos);
 
   return (
@@ -38,22 +36,28 @@ export function ElectionBarChart({ data, title }: ElectionBarChartProps) {
         {sortedData.map((result) => {
           const percentage = totalVotos > 0 ? (result.votos / totalVotos) * 100 : 0;
           const colorClasses = colorMap[result.lista_titulo] || "bg-slate-400";
+          const threshold = 18; // Umbral para decidir si el texto va adentro o afuera
 
           return (
-            <div key={result.lista_titulo} className="grid grid-cols-3 gap-4 items-center">
-              <div className="col-span-2">
-                <div
-                  className={`w-full bg-slate-200 rounded-full h-8 flex items-center transition-all duration-500`}
-                >
+            <div key={result.lista_titulo} className="grid grid-cols-10 gap-2 items-center text-sm">
+              <div className="col-span-6">
+                <div className="w-full bg-slate-200 rounded-full h-7 flex items-center">
                   <div
-                    className={`${colorClasses} h-8 rounded-full text-white text-sm font-bold flex items-center justify-end pr-2`}
+                    className={`${colorClasses} h-7 rounded-full text-white font-bold flex items-center justify-end pr-2 transition-all duration-500`}
                     style={{ width: `${percentage}%` }}
                   >
-                    {percentage > 15 && <span>{percentage.toFixed(1)}%</span>}
+                    {/* El porcentaje se muestra DENTRO si la barra es suficientemente larga */}
+                    {percentage >= threshold && <span>{percentage.toFixed(1)}%</span>}
                   </div>
+                  {/* El porcentaje se muestra AFUERA (en la parte gris) si la barra es muy corta */}
+                  {percentage < threshold && (
+                    <span className="pl-2 font-bold text-slate-600">
+                      {percentage.toFixed(1)}%
+                    </span>
+                  )}
                 </div>
               </div>
-              <div className="col-span-1 text-sm font-medium text-slate-700">
+              <div className="col-span-4 font-medium text-slate-700">
                 {result.lista_titulo}
               </div>
             </div>
