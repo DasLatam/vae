@@ -1,7 +1,7 @@
 // src/components/Footer.tsx
 import Link from 'next/link';
 import Image from 'next/image';
-import { Info, Twitter, Youtube, Facebook, Mail, ClipboardList } from 'lucide-react'; // Importamos ClipboardList
+import { Info, Twitter, Youtube, Facebook, Mail, ClipboardList, BarChart } from 'lucide-react'; // Importamos BarChart
 import { Logo } from './Logo';
 
 export function Footer() {
@@ -48,7 +48,6 @@ export function Footer() {
                   <Info size={16} className="mr-2" /> Transparencia
                 </Link>
               </li>
-              {/* --- NUEVO ENLACE A ENCUESTA --- */}
               <li>
                 <Link href="/encuestas/1" className="hover:text-blue-600 flex items-center">
                   <ClipboardList size={16} className="mr-2" /> Encuesta Elecciones 2025
@@ -74,6 +73,10 @@ export function Footer() {
               <a href="https://www.facebook.com/AmigosRepublicanos" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-slate-500 hover:text-blue-700 transition-colors">
                 <Facebook size={24} />
               </a>
+              {/* --- NUEVO ICONO DE ANALYTICS --- */}
+              <a href="https://analytics.google.com/analytics/web/?utm_source=marketingplatform.google.com&utm_medium=et&utm_campaign=marketingplatform.google.com%2Fabout%2Fanalytics%2F#/a368712703p505398931/realtime/overview?params=_u..nav%3Dmaui" target="_blank" rel="noopener noreferrer" aria-label="Ver en Google Analytics" title="Ver en Google Analytics" className="text-slate-500 hover:text-orange-500 transition-colors">
+                <BarChart size={24} />
+              </a>
             </div>
             <div className="mt-4">
               <p className="text-xs text-slate-500 mb-2">O escaneá para donar:</p>
@@ -89,6 +92,11 @@ export function Footer() {
           
         </div>
         <div className="mt-12 border-t border-slate-200 pt-6 text-center text-slate-500 text-sm">
+          <div className="flex justify-center items-center gap-4 mb-2">
+            <Link href="/privacidad" className="hover:underline">Política de Privacidad</Link>
+            <span>•</span>
+            <Link href="/condiciones" className="hover:underline">Términos y Condiciones</Link>
+          </div>
           <p>© {new Date().getFullYear()} VAE - Voto Argentino en el Exterior - Un proyecto cívico independiente - Power By Asado Patrio 🇦🇷</p>
         </div>
       </div>
