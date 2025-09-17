@@ -27,8 +27,9 @@ export function Header() {
           <Link href="/normativa" className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Normativa</Link>
           <Link href="/novedades" className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Novedades</Link>
           <Link href="/resultados" className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Resultados</Link>
+          {/* --- NUEVO ENLACE A ENCUESTA --- */}
+          <Link href="/encuestas/1" className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Encuesta</Link>
           
-          {/* Botón actualizado a "Colaborar" */}
           <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm hover:bg-blue-700 transition-all flex items-center ml-4">
             <Heart size={16} className="mr-2" />
             Colaborar
@@ -52,6 +53,8 @@ export function Header() {
             <Link href="/normativa" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Normativa</Link>
             <Link href="/novedades" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Novedades</Link>
             <Link href="/resultados" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Resultados</Link>
+            {/* --- NUEVO ENLACE A ENCUESTA (MÓVIL) --- */}
+            <Link href="/encuestas/1" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Encuesta</Link>
             <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="bg-blue-100 text-blue-800 font-bold w-full text-center py-2 mt-2">
               Colaborar con el Proyecto
             </a>

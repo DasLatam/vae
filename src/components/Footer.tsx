@@ -1,7 +1,7 @@
 // src/components/Footer.tsx
 import Link from 'next/link';
 import Image from 'next/image';
-import { Info, Twitter, Youtube, Facebook, Mail } from 'lucide-react';
+import { Info, Twitter, Youtube, Facebook, Mail, ClipboardList } from 'lucide-react'; // Importamos ClipboardList
 import { Logo } from './Logo';
 
 export function Footer() {
@@ -48,6 +48,12 @@ export function Footer() {
                   <Info size={16} className="mr-2" /> Transparencia
                 </Link>
               </li>
+              {/* --- NUEVO ENLACE A ENCUESTA --- */}
+              <li>
+                <Link href="/encuestas/1" className="hover:text-blue-600 flex items-center">
+                  <ClipboardList size={16} className="mr-2" /> Encuesta Elecciones 2025
+                </Link>
+              </li>
               <li>
                 <a href="mailto:republiaami@gmail.com" className="hover:text-blue-600 flex items-center">
                   <Mail size={16} className="mr-2" /> Contacto
@@ -83,11 +89,6 @@ export function Footer() {
           
         </div>
         <div className="mt-12 border-t border-slate-200 pt-6 text-center text-slate-500 text-sm">
-          <div className="flex justify-center items-center gap-4 mb-2">
-            <Link href="/privacidad" className="hover:underline">Política de Privacidad</Link>
-            <span>•</span>
-            <Link href="/condiciones" className="hover:underline">Términos y Condiciones</Link>
-          </div>
           <p>© {new Date().getFullYear()} VAE - Voto Argentino en el Exterior - Un proyecto cívico independiente - Power By Asado Patrio 🇦🇷</p>
         </div>
       </div>
