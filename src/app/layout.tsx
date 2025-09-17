@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import '@tremor/react/dist/tremor.css'; // <-- LÍNEA AÑADIDA
+// La línea de importación de Tremor ha sido eliminada
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@/components/Analytics";

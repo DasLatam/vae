@@ -28,6 +28,15 @@
       <directory name="como-votar">
         <file>page.tsx</file>
       </directory>
+      <directory name="encuestas">
+        <directory name="[id]">
+          <file>page.tsx</file>
+          <directory name="resultados">
+            <file>page.tsx</file>
+          </directory>
+        </directory>
+        <file>page_etc.tsx</file>
+      </directory>
       <file>globals.css</file>
       <file>icon.tsx</file>
       <file>layout.tsx</file>

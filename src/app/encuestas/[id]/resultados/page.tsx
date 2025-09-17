@@ -5,11 +5,14 @@ import { Mail } from 'lucide-react';
 
 export const revalidate = 0;
 
-// 1. Definimos un "tipo" para nuestros resultados para que TypeScript entienda la estructura
 type Resultado = {
     partido: string;
     votos: number;
     porcentaje: number;
+};
+
+type RespuestaData = {
+    partido_politico: string | null;
 };
 
 async function getResultados(encuestaId: string) {
@@ -23,8 +26,7 @@ async function getResultados(encuestaId: string) {
         return null;
     }
 
-    // 2. Le decimos a TypeScript que el acumulador será un Record<string, number>
-    const conteo = data.reduce((acc: Record<string, number>, respuesta) => {
+    const conteo = (data as RespuestaData[]).reduce((acc: Record<string, number>, respuesta) => {
         const partido = respuesta.partido_politico;
         if (partido) {
             acc[partido] = (acc[partido] || 0) + 1;
@@ -34,7 +36,6 @@ async function getResultados(encuestaId: string) {
 
     const totalVotos = count || 0;
     
-    // 3. Le decimos a TypeScript que el array final será del tipo "Resultado"
     const resultados: Resultado[] = Object.entries(conteo)
         .map(([partido, votos]) => ({
             partido,
