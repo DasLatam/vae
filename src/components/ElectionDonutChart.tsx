@@ -23,7 +23,6 @@ export function ElectionDonutChart({ data, title }: ElectionDonutChartProps) {
 
   const totalVotos = data.reduce((sum, item) => sum + item.votos, 0);
 
-  // 1. Paleta de colores mucho más amplia para evitar grises
   const colorPalette = [
     "blue", "cyan", "sky", "indigo", "violet", "purple",
     "fuchsia", "rose", "red", "orange", "amber", "yellow",
@@ -34,7 +33,6 @@ export function ElectionDonutChart({ data, title }: ElectionDonutChartProps) {
     <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-200 flex flex-col h-full">
       <div className="text-center">
         <h3 className="text-xl font-semibold text-slate-800">{title}</h3>
-        {/* 2. Añadimos el total de votos para dar más información */}
         <p className="text-sm text-slate-500">
           Total: {valueFormatter(totalVotos)}
         </p>
@@ -46,16 +44,15 @@ export function ElectionDonutChart({ data, title }: ElectionDonutChartProps) {
           category="value"
           index="name"
           valueFormatter={valueFormatter}
-          colors={colorPalette} // Usamos la nueva paleta
+          colors={colorPalette}
           showAnimation={true}
-          variant="pie" // Cambiamos a Pie Chart para un look más clásico
+          // Usamos 'donut' en lugar de 'pie' para un look más moderno
         />
       </div>
-
-      {/* 3. Leyenda con mejor estilo */}
+      
       <Legend
         categories={chartData.map(item => item.name)}
-        colors={colorPalette} // Usamos la nueva paleta
+        colors={colorPalette}
         className="max-w-xs mx-auto"
       />
     </div>

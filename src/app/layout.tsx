@@ -2,14 +2,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import '@tremor/react/dist/tremor.css'; // <-- LÍNEA AÑADIDA
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Analytics } from "@/components/Analytics"; // 1. Importar el componente
+import { Analytics } from "@/components/Analytics";
 
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  // ... (el resto de tus metadatos no cambia)
   title: "VAE - Voto Argentino en el Exterior",
   description: "Información y asesoramiento para que los argentinos residentes en el exterior puedan ejercer su derecho al voto.",
   openGraph: {
@@ -39,7 +39,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
-        <Analytics /> {/* 2. Añadir el componente aquí */}
+        <Analytics />
       </body>
     </html>
   );
