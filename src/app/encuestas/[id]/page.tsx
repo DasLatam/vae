@@ -17,8 +17,9 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
   const [encuesta, setEncuesta] = useState<Encuesta | null>(null);
   const [haVotado, setHaVotado] = useState(true);
   const [mensaje, setMensaje] = useState('');
+  const [isError, setIsError] = useState(false);
   const [cargando, setCargando] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false); // 1. Nuevo estado para "enviando"
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [provinciaSeleccionada, setProvinciaSeleccionada] = useState('');
   const [partidosDisponibles, setPartidosDisponibles] = useState<string[]>([]);
@@ -32,7 +33,6 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
     } else {
       setHaVotado(false);
     }
-
     async function cargarEncuesta() {
       const { data } = await supabase.from('encuestas').select('*').eq('id', idEncuesta).single();
       setEncuesta(data);
@@ -50,16 +50,28 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
   }, [provinciaSeleccionada]);
 
   async function handleSubmit(formData: FormData) {
-    setIsSubmitting(true); // 2. Indicar que el envío comenzó
-    const resultado = await enviarRespuestaEncuesta(formData);
-    setMensaje(resultado.message);
-    if (resultado.success) {
-      localStorage.setItem(storageKey, 'true');
-      setHaVotado(true);
+    setIsSubmitting(true);
+    setIsError(false);
+    setMensaje('');
+
+    try {
+      const resultado = await enviarRespuestaEncuesta(formData);
+      setMensaje(resultado.message);
+      if (resultado.success) {
+        localStorage.setItem(storageKey, 'true');
+        setHaVotado(true);
+      } else {
+        setIsError(true);
+      }
+    } catch (e) {
+      setMensaje('Error de conexión. Por favor, intenta de nuevo.');
+      setIsError(true);
     }
-    setIsSubmitting(false); // 3. Indicar que el envío terminó
+    
+    setIsSubmitting(false);
   }
 
+  // ... (El resto del código es igual, lo incluyo para que solo copies y pegues)
   if (cargando) return <div className="text-center py-20">Cargando encuesta...</div>;
   if (!encuesta) return <div className="text-center py-20">Encuesta no encontrada.</div>;
 
@@ -74,43 +86,27 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
             <div className="text-center bg-blue-50 p-6 rounded-lg">
               <h2 className="text-2xl font-bold text-blue-800">{mensaje || '¡Gracias por participar!'}</h2>
               <p className="text-slate-600 mt-2">Tu opinión es muy importante para nuestra comunidad.</p>
-              <Link href={`/encuestas/${idEncuesta}/resultados`} className="mt-4 inline-block bg-blue-600 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-700">
-                Ver Resultados
-              </Link>
+              <Link href={`/encuestas/${idEncuesta}/resultados`} className="mt-4 inline-block bg-blue-600 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-700">Ver Resultados</Link>
             </div>
           ) : (
             <form action={handleSubmit} className="space-y-6">
               <input type="hidden" name="encuesta_id" value={encuesta.id} />
-              
               <div>
                 <label className="font-semibold">Última provincia donde viviste en Argentina: *</label>
-                <select 
-                  name="ultima_provincia" 
-                  required 
-                  className="mt-2 block w-full p-3 border border-gray-300 rounded-md"
-                  value={provinciaSeleccionada}
-                  onChange={(e) => setProvinciaSeleccionada(e.target.value)}
-                >
+                <select name="ultima_provincia" required className="mt-2 block w-full p-3 border border-gray-300 rounded-md" value={provinciaSeleccionada} onChange={(e) => setProvinciaSeleccionada(e.target.value)}>
                   <option value="">Selecciona una provincia</option>
                   {provinciasArgentinas.map(p => <option key={p} value={p}>{p}</option>)}
                 </select>
               </div>
-
               <div>
                 <label className="font-semibold">¿A qué partido político votarías? *</label>
-                <select 
-                  name="partido_politico" 
-                  required 
-                  className="mt-2 block w-full p-3 border border-gray-300 rounded-md"
-                  disabled={!provinciaSeleccionada}
-                >
+                <select name="partido_politico" required className="mt-2 block w-full p-3 border border-gray-300 rounded-md" disabled={!provinciaSeleccionada}>
                   <option value="">{provinciaSeleccionada ? "Selecciona una opción" : "Primero elegí una provincia"}</option>
                   {partidosDisponibles.map(p => <option key={p} value={p}>{p}</option>)}
                   <option>Otro</option>
                   <option>En Blanco / No sabe</option>
                 </select>
               </div>
-
               <div>
                 <label className="font-semibold">País donde vivís actualmente:</label>
                 <select name="pais_residencia" className="mt-2 block w-full p-3 border border-gray-300 rounded-md">
@@ -118,7 +114,6 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
                   {listaDePaises.map(p => <option key={p} value={p}>{p}</option>)}
                 </select>
               </div>
-
               <div>
                 <label className="font-semibold">¿Cuál es tu rango de edad? *</label>
                 <select name="rango_edad" required className="mt-2 block w-full p-3 border border-gray-300 rounded-md">
@@ -129,20 +124,13 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
                     <option>+61</option>
                 </select>
               </div>
-
-              {/* 4. Botón actualizado */}
-              <button 
-                type="submit" 
-                disabled={isSubmitting}
-                className="w-full bg-gray-800 text-white font-bold py-3 px-6 rounded-lg hover:bg-black transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-              >
+              <button type="submit" disabled={isSubmitting} className="w-full bg-gray-800 text-white font-bold py-3 px-6 rounded-lg hover:bg-black transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">
                 {isSubmitting ? 'Enviando...' : 'Enviar Voto'}
               </button>
+              {mensaje && isError && <p className="text-red-600 text-center mt-4">{mensaje}</p>}
             </form>
           )}
-           <p className="text-xs text-slate-400 mt-4 text-center">
-            Nota: Para evitar votos duplicados, esta encuesta utiliza el almacenamiento local de tu navegador. Esto no es un método 100% seguro, sino una medida para encuestas informales.
-           </p>
+           <p className="text-xs text-slate-400 mt-4 text-center">Nota: Para evitar votos duplicados, esta encuesta utiliza el almacenamiento local de tu navegador. Esto no es un método 100% seguro, sino una medida para encuestas informales.</p>
         </div>
       </div>
     </div>
