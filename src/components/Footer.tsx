@@ -1,7 +1,7 @@
 // src/components/Footer.tsx
 import Link from 'next/link';
 import Image from 'next/image';
-import { Info, Twitter, Youtube, Facebook, Mail, ClipboardList, BarChart } from 'lucide-react'; // Importamos BarChart
+import { Info, Twitter, Youtube, Facebook, Mail, ClipboardList, BarChart } from 'lucide-react';
 import { Logo } from './Logo';
 
 export function Footer() {
@@ -27,6 +27,8 @@ export function Footer() {
               <li><Link href="/normativa" className="hover:text-blue-600">Normativa</Link></li>
               <li><Link href="/novedades" className="hover:text-blue-600">Novedades</Link></li>
               <li><Link href="/resultados" className="hover:text-blue-600">Resultados</Link></li>
+              {/* --- NUEVO ENLACE AÑADIDO --- */}
+              <li><Link href="/mapa-votantes" className="hover:text-blue-600">Mapa de Votantes</Link></li>
             </ul>
           </div>
 
@@ -73,7 +75,6 @@ export function Footer() {
               <a href="https://www.facebook.com/AmigosRepublicanos" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-slate-500 hover:text-blue-700 transition-colors">
                 <Facebook size={24} />
               </a>
-              {/* --- NUEVO ICONO DE ANALYTICS --- */}
               <a href="https://analytics.google.com/analytics/web/?utm_source=marketingplatform.google.com&utm_medium=et&utm_campaign=marketingplatform.google.com%2Fabout%2Fanalytics%2F#/a368712703p505398931/realtime/overview?params=_u..nav%3Dmaui" target="_blank" rel="noopener noreferrer" aria-label="Ver en Google Analytics" title="Ver en Google Analytics" className="text-slate-500 hover:text-orange-500 transition-colors">
                 <BarChart size={24} />
               </a>
