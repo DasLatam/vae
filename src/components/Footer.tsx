@@ -1,7 +1,7 @@
 // src/components/Footer.tsx
 import Link from 'next/link';
 import Image from 'next/image';
-import { Info, Twitter, Youtube, Facebook, Mail, ClipboardList, BarChart } from 'lucide-react';
+import { Info, Twitter, Instagram, Facebook, Mail, ClipboardList, BarChart } from 'lucide-react'; // Cambiamos Youtube por Instagram
 import { Logo } from './Logo';
 
 export function Footer() {
@@ -27,7 +27,6 @@ export function Footer() {
               <li><Link href="/normativa" className="hover:text-blue-600">Normativa</Link></li>
               <li><Link href="/novedades" className="hover:text-blue-600">Novedades</Link></li>
               <li><Link href="/resultados" className="hover:text-blue-600">Resultados</Link></li>
-              {/* --- NUEVO ENLACE AÑADIDO --- */}
               <li><Link href="/mapa-votantes" className="hover:text-blue-600">Mapa de Votantes</Link></li>
             </ul>
           </div>
@@ -55,9 +54,10 @@ export function Footer() {
                   <ClipboardList size={16} className="mr-2" /> Encuesta Elecciones 2025
                 </Link>
               </li>
+              {/* --- LÍNEA DE CORREO MODIFICADA --- */}
               <li>
-                <a href="mailto:republiaami@gmail.com" className="hover:text-blue-600 flex items-center">
-                  <Mail size={16} className="mr-2" /> Contacto
+                <a href="mailto:republicaami@gmail.com" className="hover:text-blue-600 flex items-center break-all">
+                  <Mail size={16} className="mr-2 flex-shrink-0" /> republicaami@gmail.com
                 </a>
               </li>
             </ul>
@@ -69,8 +69,9 @@ export function Footer() {
               <a href="https://x.com/RepublicanosAmi" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-slate-500 hover:text-slate-900 transition-colors">
                 <Twitter size={24} />
               </a>
-              <a href="https://www.youtube.com/@AmigosRepublicanos" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-slate-500 hover:text-red-600 transition-colors">
-                <Youtube size={24} />
+              {/* --- YOUTUBE ELIMINADO E INSTAGRAM AÑADIDO --- */}
+              <a href="https://www.instagram.com/votoargexterior" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-slate-500 hover:text-pink-600 transition-colors">
+                <Instagram size={24} />
               </a>
               <a href="https://www.facebook.com/AmigosRepublicanos" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-slate-500 hover:text-blue-700 transition-colors">
                 <Facebook size={24} />
