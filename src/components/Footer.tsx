@@ -1,7 +1,7 @@
 // src/components/Footer.tsx
 import Link from 'next/link';
 import Image from 'next/image';
-import { Info, Twitter, Instagram, Facebook, Mail, ClipboardList, BarChart } from 'lucide-react'; // Cambiamos Youtube por Instagram
+import { Info, Twitter, Instagram, Facebook, Mail, ClipboardList, BarChart } from 'lucide-react';
 import { Logo } from './Logo';
 
 export function Footer() {
@@ -54,7 +54,6 @@ export function Footer() {
                   <ClipboardList size={16} className="mr-2" /> Encuesta Elecciones 2025
                 </Link>
               </li>
-              {/* --- LÍNEA DE CORREO MODIFICADA --- */}
               <li>
                 <a href="mailto:republicaami@gmail.com" className="hover:text-blue-600 flex items-center break-all">
                   <Mail size={16} className="mr-2 flex-shrink-0" /> republicaami@gmail.com
@@ -69,7 +68,6 @@ export function Footer() {
               <a href="https://x.com/RepublicanosAmi" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-slate-500 hover:text-slate-900 transition-colors">
                 <Twitter size={24} />
               </a>
-              {/* --- YOUTUBE ELIMINADO E INSTAGRAM AÑADIDO --- */}
               <a href="https://www.instagram.com/votoargexterior" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-slate-500 hover:text-pink-600 transition-colors">
                 <Instagram size={24} />
               </a>
@@ -94,10 +92,13 @@ export function Footer() {
           
         </div>
         <div className="mt-12 border-t border-slate-200 pt-6 text-center text-slate-500 text-sm">
-          <div className="flex justify-center items-center gap-4 mb-2">
+          <div className="flex justify-center items-center flex-wrap gap-x-4 gap-y-2 mb-2">
             <Link href="/privacidad" className="hover:underline">Política de Privacidad</Link>
-            <span>•</span>
+            <span className="hidden sm:inline">•</span>
             <Link href="/condiciones" className="hover:underline">Términos y Condiciones</Link>
+            {/* --- NUEVO ENLACE AÑADIDO --- */}
+            <span className="hidden sm:inline">•</span>
+            <Link href="/admin" className="hover:underline">Intranet</Link>
           </div>
           <p>© {new Date().getFullYear()} VAE - Voto Argentino en el Exterior - Un proyecto cívico independiente - Power By Asado Patrio 🇦🇷</p>
         </div>
