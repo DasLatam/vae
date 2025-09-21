@@ -1,5 +1,5 @@
 // src/app/transparencia/page.tsx
-import { DollarSign, Server, Megaphone, Users, Code, ShieldCheck } from 'lucide-react';
+import { DollarSign, Server, Megaphone, Users, Code, ShieldCheck, Heart } from 'lucide-react';
 import { ShareButtons } from '@/components/ShareButtons';
 import type { Metadata } from 'next';
 
@@ -26,6 +26,7 @@ function GastoCard({ icon, title, amount, children }: { icon: React.ReactNode, t
 export default function TransparenciaPage() {
   const shareTitle = "Transparencia de Fondos - VAE";
   const shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/transparencia`;
+  const urlDonacion = "https://buymeacoffee.com/amigosrepublicanos";
 
   return (
     <div className="bg-slate-50 py-12 sm:py-16">
@@ -33,22 +34,27 @@ export default function TransparenciaPage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-blue-900 mb-4">
-              Transparencia de Fondos
+              {/* --- TÍTULO CON ENLACE --- */}
+              <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="hover:text-blue-700 transition-colors">
+                Transparencia de Fondos
+              </a>
             </h1>
             <p className="text-lg text-slate-600">
-              Creemos en la transparencia total. Aquí detallamos en qué se invierte cada colaboración que recibimos para mantener y hacer crecer este proyecto.
+              Creemos en la transparencia total. Aquí detallamos en qué se invierte cada colaboración que recibimos para mantener este proyecto en funcionamiento.
             </p>
           </div>
 
           <div className="space-y-8">
-            {/* --- Secciones reordenadas y actualizadas --- */}
-            
             <GastoCard icon={<Megaphone size={32} />} title="Campañas de Difusión" amount="USD 200 al mes">
               <p>
-                Para alcanzar a la mayor cantidad posible de argentinos en el exterior, invertimos en dos campañas publicitarias principales con un presupuesto de USD 100 cada una. El objetivo principal de ambas es generar más visitas al sitio web[cite: 47, 161]. Estas campañas están cuidadosamente segmentadas para llegar a personas que han vivido previamente en Argentina y ahora residen en países clave como Estados Unidos, España, Brasil, Italia, entre otros[cite: 94, 95, 174].
+                Para alcanzar a la mayor cantidad posible de argentinos en el exterior, invertimos en dos campañas publicitarias principales con un presupuesto de USD 100 cada una. El objetivo principal de ambas es generar más visitas al sitio web. Estas campañas están cuidadosamente segmentadas para llegar a personas que han vivido previamente en Argentina y ahora residen en países clave como Estados Unidos, España, Brasil, Italia, entre otros.
               </p>
               <p>
-                La campaña en Facebook e Instagram busca un alcance estimado de entre 49.000 y 130.000 personas por mes[cite: 190], con el fin de informar sobre los plazos y facilitar el acceso a la información. Con esta inversión sostenida, proyectamos alcanzar a más de 1.3 millones de personas en los próximos 24 meses, maximizando así la participación electoral desde el extranjero.
+                La campaña en Facebook e Instagram busca un alcance estimado de entre 49.000 y 130.000 personas por mes, con el fin de informar sobre los plazos y facilitar el acceso a la información. Con esta inversión sostenida, proyectamos alcanzar a más de 1.3 millones de personas en los próximos 24 meses, maximizando así la participación electoral desde el extranjero.
+              </p>
+              {/* --- ENLACE EN LA TARJETA --- */}
+              <p className="mt-4 font-medium">
+                Tu aporte nos ayuda a llegar más lejos. <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-bold">Colaborá aquí</a>.
               </p>
             </GastoCard>
             
@@ -59,6 +65,10 @@ export default function TransparenciaPage() {
               <p>
                 Una administración eficiente es vital para mantener la confianza de la comunidad. Garantiza que cada consulta sea atendida y que la información del sitio sea precisa y actual, especialmente durante los períodos electorales críticos, donde la velocidad y la exactitud son fundamentales.
               </p>
+               {/* --- ENLACE EN LA TARJETA --- */}
+              <p className="mt-4 font-medium">
+                Sostené el trabajo diario del equipo. <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-bold">Colaborá aquí</a>.
+              </p>
             </GastoCard>
 
             <GastoCard icon={<Code size={32} />} title="WebMaster" amount="USD 300 al mes">
@@ -67,6 +77,10 @@ export default function TransparenciaPage() {
               </p>
               <p>
                 La inversión en el rol de WebMaster asegura que el sitio pueda manejar un alto volumen de tráfico sin caídas, que los datos de los usuarios estén protegidos contra vulnerabilidades y que la experiencia de navegación sea rápida y fluida en cualquier dispositivo. Es la garantía de que la plataforma no solo funcione, sino que evolucione.
+              </p>
+               {/* --- ENLACE EN LA TARJETA --- */}
+              <p className="mt-4 font-medium">
+                Apoyá el desarrollo y la mejora continua. <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-bold">Colaborá aquí</a>.
               </p>
             </GastoCard>
             
@@ -77,8 +91,24 @@ export default function TransparenciaPage() {
               <p>
                 Esta infraestructura es la base sobre la que se construye todo el proyecto. Una inversión adecuada en hosting y seguridad garantiza que el sitio sea confiable, proteja los datos de los usuarios y esté siempre disponible, especialmente en los momentos de mayor demanda informativa.
               </p>
+               {/* --- ENLACE EN LA TARJETA --- */}
+              <p className="mt-4 font-medium">
+                Ayudanos a mantener el sitio online y seguro. <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-bold">Colaborá aquí</a>.
+              </p>
             </GastoCard>
-
+          </div>
+          
+          {/* --- NUEVO BOTÓN GRANDE DE COLABORACIÓN --- */}
+          <div className="text-center mt-16">
+            <a 
+              href={urlDonacion} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center bg-blue-600 text-white font-bold py-4 px-10 rounded-full text-lg hover:bg-blue-700 transition-all transform hover:scale-105"
+            >
+              <Heart className="mr-3" size={24} />
+              COLABORAR CON EL PROYECTO
+            </a>
           </div>
 
           <div className="mt-12 py-6 border-t border-slate-200">
