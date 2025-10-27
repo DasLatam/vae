@@ -33,15 +33,15 @@ export default function ComoVotarPage() {
               question="Cronograma Estimado Elecciones 2027"
               answer={
                 <>
-                  <p className="mb-2">Estas son las fechas clave estimadas. ¡Suscribite para recibir las confirmaciones!</p>
+                  <p className="mb-2"><strong>Importante:</strong> Estas son fechas estimadas basadas en ciclos anteriores. Las fechas oficiales serán confirmadas por la Cámara Nacional Electoral.</p>
                   <ul className="list-disc list-inside space-y-2">
-                    <li><strong>Agosto 2026:</strong> Fecha límite para tener tu domicilio en el exterior actualizado en el DNI.</li>
-                    <li><strong>Febrero 2027:</strong> Publicación del padrón provisorio. Momento para verificar tus datos y reclamar si hay errores.</li>
-                    <li><strong>Abril 2027:</strong> Publicación del padrón definitivo. Confirma tu lugar de votación (si es presencial).</li>
-                    <li><strong>Mayo 2027:</strong> Período para <a href="https://www.padron.gov.ar/cne_care/care_postal_consulta.php" target="_blank" rel="noopener noreferrer" className={linkStyles}>inscribirte si elegís votar por correo postal</a>.</li>
-                    <li><strong>Septiembre 2027:</strong> Recepción del kit electoral en tu domicilio si optaste por voto postal.</li>
-                    <li><strong>Principios de Octubre 2027:</strong> Fecha límite para enviar tu voto por correo postal.</li>
-                    <li><strong>Fines de Octubre 2027:</strong> Día de la elección presencial en consulados.</li>
+                    <li><strong>Agosto 2026 (Estimado):</strong> Fecha límite para tener tu domicilio en el exterior actualizado en el DNI.</li>
+                    <li><strong>Febrero 2027 (Estimado):</strong> Publicación del padrón provisorio. Momento para verificar tus datos y reclamar si hay errores.</li>
+                    <li><strong>Abril 2027 (Estimado):</strong> Publicación del padrón definitivo. Confirma tu lugar de votación (si es presencial).</li>
+                    <li><strong>Mayo 2027 (Estimado):</strong> Período para inscribirte si elegís votar por correo postal (el link oficial se habilitará cerca de la fecha en el <a href="https://www.padron.gov.ar/cne_care/" target="_blank" rel="noopener noreferrer" className={linkStyles}>sitio de la CNE</a>).</li>
+                    <li><strong>Septiembre 2027 (Estimado):</strong> Recepción del kit electoral en tu domicilio si optaste por voto postal.</li>
+                    <li><strong>Principios de Octubre 2027 (Estimado):</strong> Fecha límite para enviar tu voto por correo postal.</li>
+                    <li><strong>Fines de Octubre 2027 (Estimado):</strong> Día de la elección presencial en consulados.</li>
                   </ul>
                   <p className="mt-4">
                     <Link href="/#formulario-suscripcion" className={linkStyles}>

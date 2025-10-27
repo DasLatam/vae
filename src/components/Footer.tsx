@@ -5,7 +5,7 @@ import { Info, Twitter, Instagram, Facebook, Mail, ClipboardList, BarChart } fro
 import { Logo } from './Logo';
 
 export function Footer() {
-  const idNuevaEncuesta = 2; // <<<--- USA EL NUEVO ID DE TU ENCUESTA
+  const idNuevaEncuesta = 2; // <<<--- ID de la NUEVA encuesta
 
   return (
     <footer className="bg-white border-t border-slate-200">

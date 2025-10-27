@@ -8,8 +8,8 @@ import { Menu, X, Heart } from 'lucide-react';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-  const urlDonacion = "https://buymeacoffee.com/amigosrepublicanos"; 
+  const urlDonacion = "https://buymeacoffee.com/amigosrepublicanos";
+  const idNuevaEncuesta = 2; // <<<--- ID de la NUEVA encuesta
 
   return (
     <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-200">
@@ -27,8 +27,8 @@ export function Header() {
           <Link href="/normativa" className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Normativa</Link>
           <Link href="/novedades" className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Novedades</Link>
           <Link href="/resultados" className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Resultados</Link>
-          {/* --- NUEVO ENLACE A ENCUESTA --- */}
-          <Link href="/encuestas/1" className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Encuesta</Link>
+          {/* --- Enlace Actualizado --- */}
+          <Link href={`/encuestas/${idNuevaEncuesta}`} className="px-3 py-2 rounded-md hover:bg-slate-100 transition-colors">Encuesta</Link>
           
           <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm hover:bg-blue-700 transition-all flex items-center ml-4">
             <Heart size={16} className="mr-2" />
@@ -36,16 +36,11 @@ export function Header() {
           </a>
         </nav>
         
-        <button 
-          className="md:hidden text-slate-600"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
+        <button className="md:hidden text-slate-600" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
           {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* Menú desplegable para móviles */}
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-slate-200">
           <nav className="flex flex-col items-center space-y-2 py-4">
@@ -53,8 +48,8 @@ export function Header() {
             <Link href="/normativa" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Normativa</Link>
             <Link href="/novedades" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Novedades</Link>
             <Link href="/resultados" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Resultados</Link>
-            {/* --- NUEVO ENLACE A ENCUESTA (MÓVIL) --- */}
-            <Link href="/encuestas/1" className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Encuesta</Link>
+            {/* --- Enlace Actualizado (Móvil) --- */}
+            <Link href={`/encuestas/${idNuevaEncuesta}`} className="w-full text-center py-2 text-slate-700 hover:bg-slate-100" onClick={() => setIsMenuOpen(false)}>Encuesta</Link>
             <a href={urlDonacion} target="_blank" rel="noopener noreferrer" className="bg-blue-100 text-blue-800 font-bold w-full text-center py-2 mt-2">
               Colaborar con el Proyecto
             </a>
