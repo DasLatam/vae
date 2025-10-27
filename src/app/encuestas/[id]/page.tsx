@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { enviarRespuestaEncuesta } from '@/app/actions';
 import Link from 'next/link';
+import { listaDePaises } from '@/lib/datosElectorales'; // Importamos solo la lista de países
 
 type Encuesta = {
   id: number;
@@ -22,7 +23,7 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
 
   const idEncuesta = params.id;
   const storageKey = `haVotadoEncuesta_${idEncuesta}`;
-  const idEncuestaAnterior = 1; // ID de la encuesta de partidos
+  const idEncuestaAnterior = 1; // ID de la encuesta de partidos 2025
 
   useEffect(() => {
     if (localStorage.getItem(storageKey)) setHaVotado(true); else setHaVotado(false);
@@ -36,8 +37,9 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
 
   async function handleSubmit(formData: FormData) {
     setIsSubmitting(true);
-    formData.append('ultima_provincia', '-'); // Placeholder
-    formData.append('rango_edad', '-'); // Placeholder
+    // Añadimos placeholder solo para el campo no usado en esta encuesta
+    formData.append('ultima_provincia', '-'); 
+    
     const resultado = await enviarRespuestaEncuesta(formData);
     setMensaje(resultado.message);
     if (resultado.success) {
@@ -62,43 +64,60 @@ export default function EncuestaPage({ params }: { params: { id: string } }) {
             <div className="text-center bg-blue-50 p-6 rounded-lg">
               <h2 className="text-2xl font-bold text-blue-800">{mensaje || '¡Gracias por participar!'}</h2>
               <p className="text-slate-600 mt-2">Tu opinión nos ayuda a mejorar la comunicación.</p>
-              {/* --- Enlace a resultados anteriores --- */}
-              {encuesta.id === 2 && ( // Mostrar solo si es la nueva encuesta
-                 <Link href={`/encuestas/${idEncuestaAnterior}/resultados`} className="mt-6 inline-block text-sm text-blue-600 hover:underline">
-                   Ver resultados de la encuesta anterior (Elecciones 2025)
+              {/* Enlace a los resultados de ESTA encuesta */}
+              <Link href={`/encuestas/${idEncuesta}/resultados`} className="mt-4 inline-block bg-blue-600 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-700">
+                Ver Resultados Parciales
+              </Link>
+              {/* Enlace a resultados anteriores */}
+              {parseInt(idEncuesta) !== idEncuestaAnterior && ( // Mostrar solo si no es la encuesta anterior
+                 <Link href={`/encuestas/${idEncuestaAnterior}/resultados`} className="mt-6 block text-sm text-blue-600 hover:underline">
+                   Ver resultados de la encuesta anterior (Intención de Voto 2025)
                  </Link>
               )}
             </div>
           ) : (
             <form action={handleSubmit} className="space-y-6">
               <input type="hidden" name="encuesta_id" value={encuesta.id} />
-
-              {/* --- Pregunta Actualizada --- */}
+              
+              {/* --- Pregunta Principal Actualizada --- */}
               <div>
-                <label className="font-semibold block mb-2">¿Cómo calificás la comunicación de los precandidatos presidenciales hacia los argentinos en el exterior? *</label>
-                <select
-                  name="partido_politico" // Reutilizamos este campo
-                  required
+                <label className="font-semibold block mb-2">¿Cómo calificás la comunicación general de los precandidatos hacia los argentinos en el exterior? *</label>
+                <select 
+                  name="partido_politico" // Reutilizamos este campo para la respuesta principal
+                  required 
                   className="mt-1 block w-full p-3 border border-gray-300 rounded-md"
                 >
-                  <option value="">Selecciona una valoración</option>
-                  <option value="Muy Buena">Muy Buena</option>
-                  <option value="Buena">Buena</option>
-                  <option value="Regular">Regular</option>
-                  <option value="Mala">Mala</option>
-                  <option value="Muy Mala">Muy Mala</option>
+                  <option value="">Selecciona una opción</option>
+                  <option value="Buena - Llega información clara">Buena - Llega información clara</option>
+                  <option value="Regular - Podría ser mejor">Regular - Podría ser mejor</option>
+                  <option value="Mala - No me siento informado">Mala - No me siento informado</option>
                   <option value="No sabe / No contesta">No sabe / No contesta</option>
                 </select>
               </div>
 
-              {/* --- Campos Opcionales --- */}
+              {/* --- Campo País con ComboBox --- */}
               <div>
-                <label className="font-semibold">País donde vivís actualmente (Opcional):</label>
-                <input type="text" name="pais_residencia" className="mt-1 block w-full p-3 border border-gray-300 rounded-md" />
+                <label className="font-semibold">País donde vivís actualmente: *</label>
+                <select name="pais_residencia" required className="mt-1 block w-full p-3 border border-gray-300 rounded-md">
+                  <option value="">Selecciona un país</option>
+                  {listaDePaises.map(p => <option key={p} value={p}>{p}</option>)}
+                </select>
+              </div>
+              
+              {/* --- Campo Edad con ComboBox --- */}
+              <div>
+                <label className="font-semibold">¿Cuál es tu rango de edad? *</label>
+                <select name="rango_edad" required className="mt-1 block w-full p-3 border border-gray-300 rounded-md">
+                    <option value="">Selecciona tu edad</option>
+                    <option>16-25</option>
+                    <option>26-40</option>
+                    <option>41-60</option>
+                    <option>+61</option>
+                </select>
               </div>
 
-              <button
-                type="submit"
+              <button 
+                type="submit" 
                 disabled={isSubmitting}
                 className="w-full bg-gray-800 text-white font-bold py-3 px-6 rounded-lg hover:bg-black transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
